@@ -135,6 +135,7 @@ public class ExpenxActivity extends AppCompatActivity
                 ((TextView) findViewById(R.id.nav_textViewUserName)).setText(user.fname + " " + user.lname);
                 ((TextView) findViewById(R.id.nav_textViewUserEmail)).setText(sharedPreferences.getString("email", null));
 
+                if(user.profileImage != null){
                 storageRef.child(user.profileImage).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
@@ -144,9 +145,11 @@ public class ExpenxActivity extends AppCompatActivity
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception exception) {
+                        exception.printStackTrace();
                         MessageOutput.showSnackbarLongDuration(ExpenxActivity.this, "Something went wrong while loading your profile image...!");
                     }
                 });
+            }
             }
 
             @Override
