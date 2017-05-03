@@ -2,18 +2,27 @@ package com.expenx.expenx.activity;
 
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.DecelerateInterpolator;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
+import android.view.animation.ScaleAnimation;
+import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.expenx.expenx.R;
 import com.expenx.expenx.core.MessageOutput;
@@ -31,24 +40,34 @@ import com.google.firebase.database.ValueEventListener;
 
 public class LoginActivity extends AppCompatActivity {
 
+    ViewGroup mLoginMainRelativeLayout;
+
     ImageView mCircleAroundE;
 
-    EditText mEmailText;
-    EditText mPasswordText;
+    EditText mEmailText, mPasswordText;
 
-    Button mLoginButton;
+    TextView mExpenxText, mEText, mOrViaEmailText, mForgotPasswordText, mCreateAccountText, mAllRightsText;
 
-    public static FirebaseAuth mAuth;
+    Button mLoginButton, mLoginGoogleButton;
+
+    public FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
-    private DatabaseReference databaseReference;
-    public static User user = null;
+    public DatabaseReference databaseReference;
 
     private String TAG = "expenxtag";
+
+    SharedPreferences preferences = null;
+    SharedPreferences.Editor editor = null;
+
+    private static boolean isExpenxActivityLaunched = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        preferences = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
+
 
         mAuth = FirebaseAuth.getInstance();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
@@ -58,7 +77,16 @@ public class LoginActivity extends AppCompatActivity {
                 if (user != null) {
                     // User is signed in
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
-                    startActivity(new Intent(LoginActivity.this,ExpenxActivity.class));
+
+                    editor = preferences.edit();
+                    editor.putString("uid", user.getUid());
+                    editor.putString("email", user.getEmail());
+                    editor.apply();
+
+                    if(!isExpenxActivityLaunched) {
+                        startActivity(new Intent(LoginActivity.this, ExpenxActivity.class));
+                        isExpenxActivityLaunched = true;
+                    }
                     LoginActivity.this.finish();
                 } else {
                     // User is signed out
@@ -70,19 +98,113 @@ public class LoginActivity extends AppCompatActivity {
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
-        RotateAnimation rotate = new RotateAnimation(0, 90, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-        rotate.setRepeatCount(Animation.INFINITE);
-        rotate.setDuration(6000);
-        rotate.setInterpolator(new LinearInterpolator());
-        rotate.start();
-
-        mCircleAroundE = (ImageView) findViewById(R.id.circleAroundE);
-        mCircleAroundE.setAnimation(rotate);
+        mLoginMainRelativeLayout = (ViewGroup) findViewById(R.id.activity_login);
 
         mEmailText = (EditText) findViewById(R.id.editTextEmail);
         mPasswordText = (EditText) findViewById(R.id.editTextPassword);
 
         mLoginButton = (Button) findViewById(R.id.buttonLogin);
+        mLoginGoogleButton = (Button) findViewById(R.id.buttonLoginGoogle);
+
+        mEText = (TextView) findViewById(R.id.textViewE);
+        mExpenxText = (TextView) findViewById(R.id.textViewExpenx);
+        mOrViaEmailText = (TextView) findViewById(R.id.textViewOrViaEmail);
+        mForgotPasswordText = (TextView) findViewById(R.id.textViewForgotPassword);
+        mCreateAccountText = (TextView) findViewById(R.id.textViewCreateAccount);
+        mAllRightsText = (TextView) findViewById(R.id.textViewAllRightsLoginPage);
+
+        mCircleAroundE = (ImageView) findViewById(R.id.circleAroundE);
+
+
+        //animation -- start
+        final RotateAnimation rotateAnimationCircle = new RotateAnimation(0, 90, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+
+        rotateAnimationCircle.setRepeatCount(Animation.INFINITE);
+        rotateAnimationCircle.setDuration(6000);
+        rotateAnimationCircle.setInterpolator(new LinearInterpolator());
+        rotateAnimationCircle.start();
+
+        Animation scaleAnimationCircle = new ScaleAnimation(0f, 1f, 0f, 1f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        scaleAnimationCircle.setDuration(500);
+        scaleAnimationCircle.setInterpolator(new DecelerateInterpolator());
+        scaleAnimationCircle.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                View[] Views = new View[]{mExpenxText, mEText};
+
+                for (View v : Views) {
+                    v.setVisibility(View.INVISIBLE);
+                }
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                mCircleAroundE.setAnimation(rotateAnimationCircle);
+
+                View[] scaleInViews = new View[]{mExpenxText, mEText};
+
+                for (View v : scaleInViews) {
+                    Animation scale = new ScaleAnimation(0f, 1f, 0f, 1f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+                    scale.setDuration(500);
+                    scale.setInterpolator(new DecelerateInterpolator());
+                    v.setAnimation(scale);
+                    scale.start();
+                    v.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+        mCircleAroundE.setAnimation(scaleAnimationCircle);
+        scaleAnimationCircle.start();
+
+
+        final View[] views = new View[]{mLoginGoogleButton, mOrViaEmailText, mEmailText, mPasswordText, mLoginButton, mForgotPasswordText, mCreateAccountText, mAllRightsText};
+
+        long delayBetweenAnimations = 100l;
+
+        for (final View view : views) {
+            view.setVisibility(View.INVISIBLE);
+        }
+
+        for (int i = views.length - 1; i >= 0; i--) {
+            final View view = views[i];
+
+            long delay = i * delayBetweenAnimations;
+
+            view.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Animation fadeInAnimation = AnimationUtils.loadAnimation(LoginActivity.this, R.anim.fade_in_animation);
+                    Animation translateAnimation1 = new TranslateAnimation(0, 0, 1000, 0);
+                    translateAnimation1.setInterpolator(new AccelerateDecelerateInterpolator());
+                    translateAnimation1.setDuration(1000);
+                    translateAnimation1.setAnimationListener(new Animation.AnimationListener() {
+                        @Override
+                        public void onAnimationStart(Animation animation) {
+                            view.setVisibility(View.VISIBLE);
+                        }
+
+                        @Override
+                        public void onAnimationEnd(Animation animation) {
+                        }
+
+                        @Override
+                        public void onAnimationRepeat(Animation animation) {
+
+                        }
+                    });
+                    view.startAnimation(fadeInAnimation);
+                    view.setAnimation(translateAnimation1);
+                    translateAnimation1.start();
+                }
+            }, delay);
+        }
+
+        //animation -- end
 
         mLoginButton.setOnClickListener(new View.OnClickListener() {
 
@@ -147,26 +269,18 @@ public class LoginActivity extends AppCompatActivity {
                             }
 
                             if (task.isSuccessful()) {
+                                editor = preferences.edit();
+                                editor.putString("uid", mAuth.getCurrentUser().getUid());
+                                editor.putString("email", mAuth.getCurrentUser().getEmail());
+                                editor.apply();
 
-
-                                databaseReference.child("user").child(mAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(DataSnapshot dataSnapshot) {
-
-                                        user = dataSnapshot.getValue(User.class);
-                                        user.userUID = dataSnapshot.getKey();
-
-                                        startActivity(new Intent(LoginActivity.this,ExpenxActivity.class));
-                                        LoginActivity.this.finish();
-                                    }
-
-                                    @Override
-                                    public void onCancelled(DatabaseError databaseError) {
-                                        MessageOutput.showSnackbarLongDuration(LoginActivity.this, databaseError.getMessage());
-                                    }
-                                });
+                                if(!isExpenxActivityLaunched) {
+                                    startActivity(new Intent(LoginActivity.this, ExpenxActivity.class));
+                                    isExpenxActivityLaunched = true;
+                                }
+                                LoginActivity.this.finish();
                             }
-                        }catch(NullPointerException e) {
+                        } catch (NullPointerException e) {
                             MessageOutput.showSnackbarLongDuration(LoginActivity.this, "Something went wrong...!");
                         }
                         MessageOutput.dismissProgressDialog();

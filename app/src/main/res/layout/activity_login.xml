@@ -11,39 +11,40 @@
     tools:context="com.expenx.expenx.activity.LoginActivity">
 
     <RelativeLayout
+        android:id="@+id/layoutCircleIn"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="1">
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/circleAroundE"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
             android:contentDescription="@string/circle_of_e"
             android:src="@drawable/circle_login_activity" />
-
-        <TextView
-            android:id="@+id/textViewExpenx"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/textViewE"
-            android:layout_centerHorizontal="true"
-            android:text="@string/expenx"
-            android:textColor="@color/colorText"
-            android:textSize="25sp" />
 
         <TextView
             android:id="@+id/textViewE"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerInParent="false"
+            android:layout_centerVertical="false"
+            android:padding="0dp"
             android:text="@string/e"
             android:textColor="@color/colorText"
-            android:textSize="100sp"
-            android:padding="0dp"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"/>
+            android:textSize="100sp" />
+
+        <TextView
+            android:id="@+id/textViewExpenx"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/expenx"
+            android:textColor="@color/colorText"
+            android:textSize="25sp"
+            android:layout_below="@+id/textViewE"
+            android:layout_centerHorizontal="true" />
 
     </RelativeLayout>
 
@@ -64,7 +65,7 @@
         android:layout_above="@+id/editTextEmail"
         android:layout_centerHorizontal="true"
         android:text="@string/or_via_email"
-        android:textColor="@color/colorText" />
+        android:textColor="@color/colorTextMoreTransparent" />
 
     <EditText
         android:id="@+id/editTextEmail"
@@ -114,6 +115,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/textViewAllRightsLoginPage"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
         android:text="@string/don_t_have_an_account"
         android:textColor="@color/colorText" />
 

@@ -15,13 +15,13 @@ public class BorrowFrom {
     public String pushId;
     public double amount;
     public String borrowedFrom;
-    public Timestamp borrowedDate;
-    public Timestamp dueDate;
+    public Long borrowedDate;
+    public Long dueDate;
     public String description;
     public String paymentMethod;
     public String refCheckNo;
 
-    public BorrowFrom(double amount, String borrowedFrom, Timestamp borrowedDate, Timestamp dueDate, String description, String paymentMethod, String refCheckNo) {
+    public BorrowFrom(double amount, String borrowedFrom, Long borrowedDate, Long dueDate, String description, String paymentMethod, String refCheckNo) {
         this.amount = amount;
         this.borrowedFrom = borrowedFrom;
         this.borrowedDate = borrowedDate;

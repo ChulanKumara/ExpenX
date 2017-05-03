@@ -7,8 +7,20 @@
     <string name="forgot_your_password">Forgot your Password?</string>
     <string name="expenx">ExpenX</string>
     <string name="login_with_google">LOGIN WITH GOOGLE</string>
-    <string name="or_via_email">___________________or via Email___________________</string>
+    <string name="or_via_email">───────────────or via Email───────────────</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="login">LOGIN</string>
+    <string name="title_activity_expenx">ExpenxActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="nav_user_name_str" />
+    <string name="nav_user_email_str" />
+
+    <string name="register">REGISTER</string>
+    <string name="lastName">Last Name</string>
+    <string name="firstName">First Name</string>
 </resources>

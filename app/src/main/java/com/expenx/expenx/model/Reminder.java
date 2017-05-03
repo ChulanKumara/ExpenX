@@ -16,9 +16,9 @@ public class Reminder {
 
     public String frequency;
     public boolean onState;
-    public Timestamp time;
+    public Long time;
 
-    public Reminder(String frequency, boolean onState, Timestamp time) {
+    public Reminder(String frequency, boolean onState, Long time) {
         this.frequency = frequency;
         this.onState = onState;
         this.time = time;

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="none">
+        <item
+            android:id="@+id/nav_income"
+            android:icon="@drawable/ic_income"
+            android:title="Income" />
+        <item
+            android:id="@+id/nav_expense"
+            android:icon="@drawable/ic_expense"
+            android:title="Expense" />
+        <item
+            android:id="@+id/nav_debt"
+            android:icon="@drawable/ic_debt"
+            android:title="Debt"/>
+        <item
+            android:id="@+id/nav_chart_view"
+            android:icon="@drawable/ic_chart_view"
+            android:title="Chart View"/>
+        <item
+            android:id="@+id/nav_calendar_view"
+            android:icon="@drawable/ic_calendar_view"
+            android:title="Calendar View"/>
+        <item
+            android:id="@+id/nav_notes"
+            android:icon="@drawable/ic_notes"
+            android:title="Notes"/>
+        <item
+            android:id="@+id/nav_forecast"
+            android:icon="@drawable/ic_forecast"
+            android:title="Forecast"/>
+        <item
+            android:id="@+id/nav_loan_calculator"
+            android:icon="@drawable/ic_loan_calculator"
+            android:title="Loan Calculator"/>
+        <item
+            android:id="@+id/nav_currency_converter"
+            android:icon="@drawable/ic_currency_converter"
+            android:title="Currency Converter"/>
+        <item
+            android:id="@+id/nav_reminder"
+            android:icon="@drawable/ic_reminder"
+            android:title="Reminder"/>
+        <item
+            android:id="@+id/nav_settings"
+            android:icon="@drawable/ic_settings"
+            android:title="Settings"/>
+        <item
+            android:id="@+id/nav_about"
+            android:icon="@drawable/ic_about"
+            android:title="About"/>
+    </group>
+
+</menu>

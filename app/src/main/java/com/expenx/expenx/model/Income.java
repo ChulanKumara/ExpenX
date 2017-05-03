@@ -19,12 +19,12 @@ public class Income {
     public String category;
     public String description;
     public String paymentMethod;
-    public Timestamp timestamp;
+    public Long timestamp;
 
     public Income() {
     }
 
-    public Income(double amount, String category, String description, String paymentMethod, Timestamp timestamp) {
+    public Income(double amount, String category, String description, String paymentMethod, Long timestamp) {
         this.amount = amount;
         this.category = category;
         this.description = description;

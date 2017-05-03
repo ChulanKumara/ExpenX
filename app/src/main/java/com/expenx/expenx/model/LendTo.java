@@ -15,13 +15,13 @@ public class LendTo {
     public String pushId;
     public double amount;
     public String lendFrom;
-    public Timestamp lendDate;
-    public Timestamp dueDate;
+    public Long lendDate;
+    public Long dueDate;
     public String description;
     public String paymentMethod;
     public String refCheckNo;
 
-    public LendTo(double amount, String lendFrom, Timestamp lendDate, Timestamp dueDate, String description, String paymentMethod, String refCheckNo) {
+    public LendTo(double amount, String lendFrom, Long lendDate, Long dueDate, String description, String paymentMethod, String refCheckNo) {
         this.amount = amount;
         this.lendFrom = lendFrom;
         this.lendDate = lendDate;

@@ -17,12 +17,12 @@ public class Expense {
     public String category;
     public String description;
     public String paymentMethod;
-    public Timestamp timestamp;
+    public Long timestamp;
 
     public Expense() {
     }
 
-    public Expense(double amount, String category, String description, String paymentMethod, Timestamp timestamp) {
+    public Expense(double amount, String category, String description, String paymentMethod, Long timestamp) {
         this.amount = amount;
         this.category = category;
         this.description = description;
