@@ -14,4 +14,15 @@
     <color name="colorCircle">#e7e7e7</color>
     <color name="colorNavigationDrawerBackground">#404040</color>
     <color name="colorImageSelected">#BE2200</color>
+
+    <!--for calculator-->
+    <color name="primary">#FFC107</color>
+    <color name="primary_dark">#FFA000</color>
+    <color name="primary_light">#E1BEE7</color>
+    <color name="accent">#9C27B0</color>
+    <color name="okAccent">#FF5252</color>
+    <color name="primary_text">#212121</color>
+    <color name="secondary_text">#727272</color>
+    <color name="icons">#FFFFFF</color>
+    <color name="divider">#B6B6B6</color>
 </resources>

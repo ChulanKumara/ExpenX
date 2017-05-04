@@ -33,6 +33,7 @@ dependencies {
     compile 'de.hdodenhof:circleimageview:2.1.0'
     compile 'com.squareup.picasso:picasso:2.5.2'
     testCompile 'junit:junit:4.12'
+    compile files('libs/javaluator-3.0.1/javaluator-3.0.1.jar')
 }
 
 
