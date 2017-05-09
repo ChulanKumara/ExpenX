@@ -22,13 +22,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".activity.ExpenxActivity"
             android:label="ExpenX"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme" />
-
         <activity
             android:name=".activity.RegisterActivity"
             android:label="Register"
@@ -92,6 +90,11 @@
         <activity
             android:name=".activity.AboutActivity"
             android:label="About"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppThemeSecondary" />
+        <activity
+            android:name=".activity.TurnOnNetworkActivity"
+            android:label="No Network"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppThemeSecondary" />
     </application>

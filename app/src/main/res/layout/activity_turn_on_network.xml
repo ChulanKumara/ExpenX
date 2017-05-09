@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.expenx.expenx.activity.TurnOnNetworkActivity">
+
+    <ImageButton
+        android:id="@+id/imageButtonRetryToConnect"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:adjustViewBounds="false"
+        android:background="@color/transparent"
+        android:cropToPadding="false"
+        android:elevation="0dp"
+        android:scaleType="fitXY"
+        android:src="@mipmap/ic_no_network" />
+
+</RelativeLayout>

@@ -17,7 +17,7 @@ import com.expenx.expenx.R;
 public class CalculatorDialog implements View.OnClickListener {
 
     private Button one, two, three, four, five, six, seven, eight, nine, zero;
-    private Button plus, subtract, divide, multiply, plusMinus;
+    private Button plus, subtract, divide, multiply, clear;
     private Button ac, percent, dot, double_zero, equal;
     private Button mCalculaorValueOk;
     private String currentDisplayedInput = "";
@@ -114,13 +114,22 @@ public class CalculatorDialog implements View.OnClickListener {
             outputResult.setText("");
             currentDisplayedInput = "";
             inputToBeParsed = "";
+        } else if (data.equals("C")) {
+            if (currentDisplayedInput.length() > 0) {
+                String s = currentDisplayedInput;
+                s = s.substring(0, currentDisplayedInput.length() - 1);
+                currentDisplayedInput = s;
+
+                outputResult.setText(s);
+                inputToBeParsed = s;
+            }
         } else if (data.equals("=")) {
 
             // call a function that will return the result of the calculate.
             String resultObject = mCalculator.getResult(currentDisplayedInput, inputToBeParsed);
             outputResult.setText(removeTrailingZero(resultObject));
 
-            if (!outputResult.getText().toString().trim().equals(""))
+            if (outputResult.getText().toString().trim().length() > 0 && !outputResult.getText().toString().trim().equalsIgnoreCase("Error") && !outputResult.getText().toString().trim().equals(""))
                 finalResultValue = Double.parseDouble(outputResult.getText().toString());
             else
                 finalResultValue = 0;
@@ -145,7 +154,7 @@ public class CalculatorDialog implements View.OnClickListener {
     public void showDialog(Activity activity, final EditText finalEditTextValueView) {
         final Dialog dialog = new Dialog(activity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setCancelable(false);
+        dialog.setCancelable(true);
         dialog.setContentView(R.layout.calculator);
 
 
@@ -168,7 +177,7 @@ public class CalculatorDialog implements View.OnClickListener {
         subtract = (Button) dialog.findViewById(R.id.minus);
         divide = (Button) dialog.findViewById(R.id.divide);
         multiply = (Button) dialog.findViewById(R.id.multiply);
-        plusMinus = (Button) dialog.findViewById(R.id.plus_minus);
+        clear = (Button) dialog.findViewById(R.id.clear);
         ac = (Button) dialog.findViewById(R.id.acCalculator);
         percent = (Button) dialog.findViewById(R.id.percent);
         dot = (Button) dialog.findViewById(R.id.dot);
@@ -189,7 +198,7 @@ public class CalculatorDialog implements View.OnClickListener {
         subtract.setOnClickListener(this);
         divide.setOnClickListener(this);
         multiply.setOnClickListener(this);
-        plusMinus.setOnClickListener(this);
+        clear.setOnClickListener(this);
         ac.setOnClickListener(this);
         percent.setOnClickListener(this);
         dot.setOnClickListener(this);
@@ -198,7 +207,7 @@ public class CalculatorDialog implements View.OnClickListener {
         mCalculaorValueOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finalEditTextValueView.setText(finalResultValue+"");
+                finalEditTextValueView.setText(finalResultValue + "");
                 dialog.dismiss();
             }
         });
@@ -206,4 +215,6 @@ public class CalculatorDialog implements View.OnClickListener {
         dialog.show();
 
     }
+
+
 }

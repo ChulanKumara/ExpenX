@@ -1,7 +1,10 @@
 package com.expenx.expenx.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -19,6 +22,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.expenx.expenx.R;
 import com.expenx.expenx.core.MessageOutput;
@@ -53,18 +57,30 @@ public class ExpenxActivity extends AppCompatActivity
     TextView mMonthExpenseAmount;
     TextView mCurrentBalanceAmount;
 
-    @Override
+        @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_expenx);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        LoginActivity.isExpenxActivityLaunched = true;
+
         mMonthIncomeAmount = (TextView) findViewById(R.id.textViewThisMonthIncomeAmount);
         mMonthExpenseAmount = (TextView) findViewById(R.id.textViewThisMonthExpenseAmount);
         mCurrentBalanceAmount = (TextView) findViewById(R.id.textViewCurrentBalanceAmount);
 
         mCurrentBalanceAmount.setText("0.00");
+
+        //show turn on network activity if connection fails
+        ConnectivityManager conMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = conMgr.getActiveNetworkInfo();
+        if (netInfo == null) {
+            startActivity(new Intent(this, TurnOnNetworkActivity.class));
+            LoginActivity.isExpenxActivityLaunched = false;
+            this.finish();
+            return;
+        }
 
         Button mButtonChartView = (Button) findViewById(R.id.buttonChartView);
         mButtonChartView.setOnClickListener(new View.OnClickListener() {
@@ -135,21 +151,21 @@ public class ExpenxActivity extends AppCompatActivity
                 ((TextView) findViewById(R.id.nav_textViewUserName)).setText(user.fname + " " + user.lname);
                 ((TextView) findViewById(R.id.nav_textViewUserEmail)).setText(sharedPreferences.getString("email", null));
 
-                if(user.profileImage != null){
-                storageRef.child(user.profileImage).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                    @Override
-                    public void onSuccess(Uri uri) {
-                        ImageView profilePic = (ImageView) findViewById(R.id.profile_image);
-                        Picasso.with(ExpenxActivity.this).load(uri).into(profilePic);
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception exception) {
-                        exception.printStackTrace();
-                        MessageOutput.showSnackbarLongDuration(ExpenxActivity.this, "Something went wrong while loading your profile image...!");
-                    }
-                });
-            }
+                if (user.profileImage != null) {
+                    storageRef.child(user.profileImage).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            ImageView profilePic = (ImageView) findViewById(R.id.profile_image);
+                            Picasso.with(ExpenxActivity.this).load(uri).into(profilePic);
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception exception) {
+                            exception.printStackTrace();
+                            MessageOutput.showSnackbarLongDuration(ExpenxActivity.this, "Something went wrong while loading your profile image...!");
+                        }
+                    });
+                }
             }
 
             @Override
@@ -157,6 +173,8 @@ public class ExpenxActivity extends AppCompatActivity
                 MessageOutput.showSnackbarLongDuration(ExpenxActivity.this, databaseError.getMessage());
             }
         });
+
+
 
 
         databaseReference.child("income").child(sharedPreferences.getString("uid", null)).addValueEventListener(new ValueEventListener() {
@@ -320,6 +338,13 @@ public class ExpenxActivity extends AppCompatActivity
             }
         });
 
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        LoginActivity.isExpenxActivityLaunched = false;
+        this.finishAffinity(); //exit whole android application
     }
 
     @Override

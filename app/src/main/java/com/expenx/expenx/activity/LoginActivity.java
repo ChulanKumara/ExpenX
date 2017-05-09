@@ -61,7 +61,7 @@ public class LoginActivity extends AppCompatActivity {
 
     int dontListenToAuthListener;
 
-    private static boolean isExpenxActivityLaunched = false;
+    public static boolean isExpenxActivityLaunched = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,30 +78,31 @@ public class LoginActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
-            mAuthListener = new FirebaseAuth.AuthStateListener() {
-                @Override
-                public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                    FirebaseUser user = firebaseAuth.getCurrentUser();
-                    if (user != null && dontListenToAuthListener == -1) {
-                        // User is signed in
-                        Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user != null && dontListenToAuthListener == -1) {
+                    // User is signed in
+                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
 
-                        editor = preferences.edit();
-                        editor.putString("uid", user.getUid());
-                        editor.putString("email", user.getEmail());
-                        editor.apply();
+                    editor = preferences.edit();
+                    editor.putString("uid", user.getUid());
+                    editor.putString("email", user.getEmail());
+                    editor.apply();
 
-                        if (!isExpenxActivityLaunched) {
-                            startActivity(new Intent(LoginActivity.this, ExpenxActivity.class));
-                            isExpenxActivityLaunched = true;
-                        }
-                        LoginActivity.this.finish();
-                    } else {
-                        // User is signed out
-                        Log.d(TAG, "onAuthStateChanged:signed_out");
+                    if (!isExpenxActivityLaunched) {
+                        startActivity(new Intent(LoginActivity.this, ExpenxActivity.class));
+                        isExpenxActivityLaunched = true;
                     }
+
+                    LoginActivity.this.finish();
+                } else {
+                    // User is signed out
+                    Log.d(TAG, "onAuthStateChanged:signed_out");
                 }
-            };
+            }
+        };
 
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
@@ -225,7 +226,7 @@ public class LoginActivity extends AppCompatActivity {
         mCreateAccountText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this,RegisterActivity.class));
+                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
             }
         });
     }
@@ -289,7 +290,7 @@ public class LoginActivity extends AppCompatActivity {
                                 editor.putString("email", mAuth.getCurrentUser().getEmail());
                                 editor.apply();
 
-                                if(!isExpenxActivityLaunched) {
+                                if (!isExpenxActivityLaunched) {
                                     startActivity(new Intent(LoginActivity.this, ExpenxActivity.class));
                                     isExpenxActivityLaunched = true;
                                 }

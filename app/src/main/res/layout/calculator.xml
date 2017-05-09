@@ -10,6 +10,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="8dp"
+        android:layout_marginLeft="1dp"
+        android:layout_marginRight="1dp"
+        android:layout_marginTop="1dp"
         android:paddingTop="8dp"
         android:background="@color/primary_light">
         <TextView
@@ -43,11 +46,13 @@
             android:textSize="20sp"
             android:padding="8dp"
             android:layout_marginRight="1dp"
+            android:layout_marginLeft="1dp"
+            android:layout_marginTop="1dp"
             android:textColor="@color/primary_text"
             android:background="@color/accent"
             android:text="@string/ac" />
         <Button
-            android:id="@+id/plus_minus"
+            android:id="@+id/clear"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -55,9 +60,10 @@
             android:textSize="20sp"
             android:padding="8dp"
             android:layout_marginRight="1dp"
+            android:layout_marginTop="1dp"
             android:textColor="@color/primary_text"
             android:background="@color/primary"
-            android:text="@string/plus_minus" />
+            android:text="@string/clear" />
         <Button
             android:id="@+id/percent"
             android:layout_width="0dp"
@@ -67,6 +73,7 @@
             android:textSize="20sp"
             android:padding="8dp"
             android:layout_marginRight="1dp"
+            android:layout_marginTop="1dp"
             android:textColor="@color/primary_text"
             android:background="@color/primary"
             android:text="@string/percent" />
@@ -79,6 +86,7 @@
             android:textSize="20sp"
             android:padding="8dp"
             android:layout_marginRight="1dp"
+            android:layout_marginTop="1dp"
             android:textColor="@color/primary_text"
             android:background="@color/primary"
             android:text="@string/divide" />
@@ -100,6 +108,7 @@
             android:textColor="@color/primary_text"
             android:padding="8dp"
             android:layout_marginRight="1dp"
+            android:layout_marginLeft="1dp"
             android:background="@color/primary"
             android:text="@string/seven" />
         <Button
@@ -156,6 +165,7 @@
             android:textColor="@color/primary_text"
             android:padding="8dp"
             android:layout_marginRight="1dp"
+            android:layout_marginLeft="1dp"
             android:background="@color/primary"
             android:text="@string/four" />
         <Button
@@ -212,6 +222,7 @@
             android:textColor="@color/primary_text"
             android:padding="8dp"
             android:layout_marginRight="1dp"
+            android:layout_marginLeft="1dp"
             android:background="@color/primary"
             android:text="@string/one" />
         <Button
@@ -268,6 +279,7 @@
             android:textColor="@color/primary_text"
             android:padding="8dp"
             android:layout_marginRight="1dp"
+            android:layout_marginLeft="1dp"
             android:background="@color/primary"
             android:text="@string/zero" />
         <Button
@@ -321,6 +333,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginRight="1dp"
+            android:layout_marginLeft="1dp"
+            android:layout_marginBottom="1dp"
             android:layout_weight="1"
             android:background="@color/okAccent"
             android:padding="8dp"
