@@ -19,9 +19,9 @@ public class BorrowFrom {
     public Long dueDate;
     public String description;
     public String paymentMethod;
-    public String refCheckNo;
+    public long refCheckNo;
 
-    public BorrowFrom(double amount, String borrowedFrom, Long borrowedDate, Long dueDate, String description, String paymentMethod, String refCheckNo) {
+    public BorrowFrom(double amount, String borrowedFrom, Long borrowedDate, Long dueDate, String description, String paymentMethod, long refCheckNo) {
         this.amount = amount;
         this.borrowedFrom = borrowedFrom;
         this.borrowedDate = borrowedDate;
