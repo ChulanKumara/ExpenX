@@ -34,6 +34,15 @@ public class AboutActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
 
+        mCircleAroundE = (ImageView) findViewById(R.id.circleAroundE);
+        mExpenxText = (TextView) findViewById(R.id.textViewExpenx);
+        mEText = (TextView) findViewById(R.id.textViewE);
+        mThisAppDevText = (TextView) findViewById(R.id.textViewAboutText1);
+        mGroupNameText = (TextView) findViewById(R.id.textViewAboutText2);
+        mEmailComText = (TextView) findViewById(R.id.textViewAboutText3);
+        mProjectDescText = (TextView) findViewById(R.id.textViewAboutText4);
+        mAllRightsText = (TextView) findViewById(R.id.textViewAllRightsAboutPage);
+
         //animation -- start
         final RotateAnimation rotateAnimationCircle = new RotateAnimation(0, 90, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
 
@@ -76,6 +85,8 @@ public class AboutActivity extends AppCompatActivity {
 
             }
         });
+
+
         mCircleAroundE.setAnimation(scaleAnimationCircle);
         scaleAnimationCircle.start();
 
