@@ -7,17 +7,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.GestureDetector;
-import android.view.MotionEvent;
 import android.widget.CalendarView;
 
 import com.expenx.expenx.R;
-import com.expenx.expenx.core.DataModel;
+import com.expenx.expenx.core.CalendarDataModel;
+import com.expenx.expenx.core.DataAdapterForCalendarRecycler;
 import com.expenx.expenx.core.MessageOutput;
 import com.expenx.expenx.model.BorrowFrom;
 import com.expenx.expenx.model.Expense;
 import com.expenx.expenx.model.Income;
-import com.expenx.expenx.model.LendTo;
 import com.expenx.expenx.model.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -27,7 +25,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.sql.SQLOutput;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -40,7 +37,7 @@ public class CalendarViewActivity extends AppCompatActivity {
 
     private long timeStamp;
 
-    private ArrayList<DataModel> dataSet;
+    private ArrayList<CalendarDataModel> dataSet;
 
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
@@ -95,7 +92,7 @@ public class CalendarViewActivity extends AppCompatActivity {
 //
 //                    String type = "Lend From " + lendTo.lendFrom;
 //                    String info = "Amout : " + lendTo.amount;
-//                    DataModel dm = new DataModel(type, info);
+//                    CalendarDataModel dm = new CalendarDataModel(type, info);
 //                    dataSet.add(dm);
 //                }
 //            }
@@ -123,7 +120,7 @@ public class CalendarViewActivity extends AppCompatActivity {
                         System.out.println("_________________Expense amount " + expense.amount);
                         String type = expense.category + " Expense";;
                         String info = "Amout : " + expense.amount;
-                        DataModel dm = new DataModel(type, info);
+                        CalendarDataModel dm = new CalendarDataModel(type, info);
                         dataSet.add(dm);
                         initViews();
                     }
@@ -153,7 +150,7 @@ public class CalendarViewActivity extends AppCompatActivity {
                         System.out.println("_______________income amount " + income.amount);
                         String type = income.category + " Income";
                         String info = "Amout : " + income.amount;
-                        DataModel dm = new DataModel(type, info);
+                        CalendarDataModel dm = new CalendarDataModel(type, info);
                         dataSet.add(dm);
                         initViews();
                     }
@@ -179,7 +176,7 @@ public class CalendarViewActivity extends AppCompatActivity {
 
                     String type = "Debt";
                     String info = "Amout : " + borrowFrom.amount;
-                    DataModel dm = new DataModel(type, info);
+                    CalendarDataModel dm = new CalendarDataModel(type, info);
                     dataSet.add(dm);
                     initViews();
                 }
@@ -229,7 +226,7 @@ public class CalendarViewActivity extends AppCompatActivity {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
 
-        DataAdapter adapter = new DataAdapter(dataSet);
+        DataAdapterForCalendarRecycler adapter = new DataAdapterForCalendarRecycler(dataSet);
         recyclerView.setAdapter(adapter);
 
 //        recyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {

@@ -97,6 +97,11 @@
             android:label="No Network"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppThemeSecondary" />
+        <activity
+            android:name=".activity.AddNoteActivity"
+            android:label="Add Note"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppThemeSecondary" />
     </application>
 
 </manifest>

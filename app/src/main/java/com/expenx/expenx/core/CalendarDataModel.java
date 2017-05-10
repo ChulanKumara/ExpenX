@@ -4,12 +4,12 @@ package com.expenx.expenx.core;
  * Created by Imanshu on 5/8/2017.
  */
 
-public class DataModel {
+public class CalendarDataModel {
 
     private String TransactionType;
     private String TransactionInfo;
 
-    public DataModel(String TransactionType, String TransactionInfo) {
+    public CalendarDataModel(String TransactionType, String TransactionInfo) {
         this.TransactionType = TransactionType;
         this.TransactionInfo = TransactionInfo;
     }

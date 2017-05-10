@@ -1,4 +1,4 @@
-package com.expenx.expenx.activity;
+package com.expenx.expenx.core;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.expenx.expenx.R;
-import com.expenx.expenx.core.DataModel;
 
 import java.util.ArrayList;
 
@@ -15,21 +14,21 @@ import java.util.ArrayList;
  * Created by Imanshu on 5/8/2017.
  */
 
-public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
-    private ArrayList<DataModel> dataSet;
+public class DataAdapterForCalendarRecycler extends RecyclerView.Adapter<DataAdapterForCalendarRecycler.ViewHolder> {
+    private ArrayList<CalendarDataModel> dataSet;
 
-    public DataAdapter(ArrayList<DataModel> countries) {
+    public DataAdapterForCalendarRecycler(ArrayList<CalendarDataModel> countries) {
         this.dataSet = countries;
     }
 
     @Override
-    public DataAdapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+    public DataAdapterForCalendarRecycler.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.card_layout, viewGroup, false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(DataAdapter.ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(DataAdapterForCalendarRecycler.ViewHolder viewHolder, int i) {
 
         viewHolder.rType.setText(dataSet.get(i).getTransactionType());
         viewHolder.rInfo.setText(dataSet.get(i).getTransactionInfo());

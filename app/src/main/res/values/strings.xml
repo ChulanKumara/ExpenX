@@ -27,17 +27,17 @@
     <string name="change_password">Change Password</string>
     <string name="set_default_currency">Set Default Currency</string>
     <string name="logout">Logout</string>
-    
+
     <string name="reminder_add">Remind Me To Add Income/Expense</string>
     <string name="reminder_frequency">Frequency</string>
 
-        <string-array name="frequency_array">
-            <item>Daily</item>
-            <item>Weekly</item>
-            <item>Monthly</item>
-            <item>Quaterly</item>
-            <item>Yearly</item>
-        </string-array>
+    <string-array name="frequency_array">
+        <item>Daily</item>
+        <item>Weekly</item>
+        <item>Monthly</item>
+        <item>Quaterly</item>
+        <item>Yearly</item>
+    </string-array>
 
     <string name="when_to_remind">When To Remind</string>
 
@@ -45,7 +45,7 @@
     <string name="currency_converter_converted"></string>
     <string name="button_convert">CONVERT</string>
 
-   
+
     <!--for calculator-->
     <string name="one">1</string>
     <string name="two">2</string>

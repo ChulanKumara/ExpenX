@@ -1,9 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.expenx.expenx.activity.NotesActivity">
+    android:orientation="vertical"
+    android:padding="@dimen/fab_margin"
+    tools:context="com.expenx.expenx.activity.CalendarViewActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/card_recycler_view_notes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="vertical"
+        android:background="@color/colorText"
+        android:layout_above="@+id/textViewClickOnItem"
+        android:layout_alignParentTop="true" />
+
+    <TextView
+        android:id="@+id/textViewClickOnItem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorText"
+        android:layout_marginTop="2dp"
+        android:textSize="10sp"
+        android:layout_above="@+id/buttonAddNote"
+        android:text="Click on item to see details."/>
+
+    <Button
+        android:id="@+id/buttonAddNote"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginTop="@dimen/fab_margin"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/button_normal"
+        android:text="ADD NOTE"
+        android:textColor="@color/colorText" />
+
+</RelativeLayout>
