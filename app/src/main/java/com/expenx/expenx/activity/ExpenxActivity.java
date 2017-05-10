@@ -151,7 +151,7 @@ public class ExpenxActivity extends AppCompatActivity
                 ((TextView) findViewById(R.id.nav_textViewUserName)).setText(user.fname + " " + user.lname);
                 ((TextView) findViewById(R.id.nav_textViewUserEmail)).setText(sharedPreferences.getString("email", null));
 
-                if (user.profileImage != null) {
+                if (user.profileImage != null && user.profileImage.substring(0,user.profileImage.indexOf('/')).equalsIgnoreCase("users")) {
                     storageRef.child(user.profileImage).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                         @Override
                         public void onSuccess(Uri uri) {
@@ -165,6 +165,14 @@ public class ExpenxActivity extends AppCompatActivity
                             MessageOutput.showSnackbarLongDuration(ExpenxActivity.this, "Something went wrong while loading your profile image...!");
                         }
                     });
+                }else{
+                    try{
+                        ImageView profilePic = (ImageView) findViewById(R.id.profile_image);
+                        Picasso.with(ExpenxActivity.this).load(user.profileImage).into(profilePic);
+                    }catch (Exception e){
+                        e.printStackTrace();
+                        MessageOutput.showSnackbarLongDuration(ExpenxActivity.this, "Something went wrong while loading your profile image...!");
+                    }
                 }
             }
 

@@ -1,9 +1,137 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="@dimen/fab_margin"
     tools:context="com.expenx.expenx.activity.LoanCalculatorActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <LinearLayout
+        android:id="@+id/linearLayoutLoanCalAmountEdit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editTextNoteDescription"
+        android:orientation="horizontal"
+        android:weightSum="10">
+
+        <EditText
+            android:id="@+id/editTextLoanCalAmount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_weight="9"
+            android:backgroundTint="@color/colorText"
+            android:ems="10"
+            android:hint="Amount"
+            android:inputType="numberDecimal"
+            android:textColor="@color/colorText"
+            android:textColorHint="@color/colorText" />
+
+        <ImageButton
+            android:id="@+id/imageButtonLoanCalEditAmount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/transparent"
+            android:src="@drawable/ic_calculate_amount" />
+
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/editTextLoanCalInterest"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_weight="9"
+        android:backgroundTint="@color/colorText"
+        android:ems="10"
+        android:hint="Interest Rate (% per year)"
+        android:layout_below="@+id/linearLayoutLoanCalAmountEdit"
+        android:inputType="numberDecimal"
+        android:textColor="@color/colorText"
+        android:textColorHint="@color/colorText" />
+
+    <LinearLayout
+        android:id="@+id/linearLayoutLoanCalTermSelect"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editTextLoanCalInterest"
+        android:orientation="horizontal"
+        android:weightSum="11">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorText"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_weight="3"
+        android:text="Loan Term"/>
+
+        <Spinner
+            android:id="@+id/spinnerYears"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorText"
+            android:layout_weight="2" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorText"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_weight="2"
+            android:text="Years"/>
+
+        <Spinner
+            android:id="@+id/spinnerMonths"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorText"
+            android:layout_weight="2" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorText"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_weight="2"
+            android:text="Months"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textViewLoanResult"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:textColor="@color/colorText"
+        android:textSize="50sp"
+        android:text="0.00"
+        android:layout_marginBottom="30dp"
+        android:layout_above="@+id/buttonCalculateAnnually"/>
+
+    <Button
+        android:id="@+id/buttonCalculateAnnually"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/button_normal"
+        android:layout_above="@+id/buttonCalculateMonthly"
+        android:layout_marginBottom="10dp"
+        android:text="CALCULATE ANNUAL PAYMENT"
+        android:textColor="@color/colorText" />
+
+    <Button
+        android:id="@+id/buttonCalculateMonthly"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/button_normal"
+        android:text="CALCULATE MONTHLY PAYMENT"
+        android:textColor="@color/colorText" />
+
+</RelativeLayout>

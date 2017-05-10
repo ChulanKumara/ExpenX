@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "323962428989-juf1bh2c8dt2l073a77bpc6gr7j5pot3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.expenx.expenx",
+            "certificate_hash": "a91598de9482d8810a4fbf2e760f16351f3589bd"
+          }
+        },
+        {
           "client_id": "323962428989-tr4ehf3mnv6k5g1svhq2s4ellkn24fee.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -29,8 +37,13 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "323962428989-tr4ehf3mnv6k5g1svhq2s4ellkn24fee.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2
