@@ -1,9 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.expenx.expenx.activity.CalendarViewActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <CalendarView
+        android:id="@+id/calendarView"
+        android:layout_width="344dp"
+        android:layout_height="315dp"
+        android:background="@android:color/darker_gray"
+        android:elevation="1dp"
+        android:unfocusedMonthDateColor="@android:color/white"
+        android:focusedMonthDateColor="@android:color/white"
+        android:weekNumberColor="@android:color/white"
+        android:weekSeparatorLineColor="@android:style/Widget.ListView.White"
+        tools:layout_editor_absoluteX="33dp"
+        tools:layout_editor_absoluteY="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/card_recycler_view"
+        android:layout_width="370dp"
+        android:layout_height="190dp"
+        android:scrollbars="vertical"
+        android:layout_marginBottom="7dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+
+</RelativeLayout>

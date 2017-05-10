@@ -15,13 +15,7 @@
         <activity
             android:name=".activity.LoginActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/LoginTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:theme="@style/LoginTheme" />
 
         <activity
             android:name=".activity.ExpenxActivity"
@@ -58,7 +52,13 @@
             android:name=".activity.CalendarViewActivity"
             android:label="Calendar View"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseAppThemeSecondary" />
+            android:theme="@style/BaseAppThemeSecondary" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            </activity>
         <activity
             android:name=".activity.NotesActivity"
             android:label="Notes"
