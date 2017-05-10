@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.expenx.expenx">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.MEDIA_CONTENT_CONTROL" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -18,22 +22,81 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".activity.ExpenxActivity" android:theme="@style/BaseAppTheme" android:label="ExpenX" android:screenOrientation="portrait"/>
-
-        <activity android:name=".activity.RegisterActivity" android:theme="@style/BaseAppThemeSecondary" android:label="Register" android:screenOrientation="portrait" />
-        <activity android:name=".activity.IncomeActivity" android:theme="@style/BaseAppThemeSecondary" android:label="Income" android:screenOrientation="portrait" />
-        <activity android:name=".activity.ExpenseActivity" android:theme="@style/BaseAppThemeSecondary" android:label="Expense" android:screenOrientation="portrait" />
-        <activity android:name=".activity.DebtActivity" android:theme="@style/BaseAppThemeSecondary" android:label="Debt" android:screenOrientation="portrait" />
-        <activity android:name=".activity.ChartViewActivity" android:theme="@style/BaseAppThemeSecondary" android:label="Chart View" android:screenOrientation="portrait" />
-        <activity android:name=".activity.CalendarViewActivity" android:theme="@style/BaseAppThemeSecondary" android:label="Calendar View" android:screenOrientation="portrait" />
-        <activity android:name=".activity.NotesActivity" android:theme="@style/BaseAppThemeSecondary" android:label="Notes" android:screenOrientation="portrait" />
-        <activity android:name=".activity.ForecastActivity" android:theme="@style/BaseAppThemeSecondary" android:label="Forecast" android:screenOrientation="portrait" />
-        <activity android:name=".activity.LoanCalculatorActivity" android:theme="@style/BaseAppThemeSecondary" android:label="Loan Calculator" android:screenOrientation="portrait" />
-        <activity android:name=".activity.CurrencyConverterActivity" android:theme="@style/BaseAppThemeSecondary" android:label="Currency Converter" android:screenOrientation="portrait" />
-        <activity android:name=".activity.ReminderActivity" android:theme="@style/BaseAppThemeSecondary" android:label="Reminder" android:screenOrientation="portrait" />
-        <activity android:name=".activity.SettingsActivity" android:theme="@style/BaseAppThemeSecondary" android:label="Settings" android:screenOrientation="portrait" />
-        <activity android:name=".activity.AboutActivity" android:theme="@style/BaseAppThemeSecondary" android:label="About" android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ExpenxActivity"
+            android:label="ExpenX"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name=".activity.RegisterActivity"
+            android:label="Register"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppThemeSecondary" />
+        <activity
+            android:name=".activity.IncomeActivity"
+            android:label="Income"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppThemeSecondary" />
+        <activity
+            android:name=".activity.ExpenseActivity"
+            android:label="Expense"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppThemeSecondary" />
+        <activity
+            android:name=".activity.DebtActivity"
+            android:label="Debt"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppThemeSecondary" />
+        <activity
+            android:name=".activity.ChartViewActivity"
+            android:label="Chart View"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppThemeSecondary" />
+        <activity
+            android:name=".activity.CalendarViewActivity"
+            android:label="Calendar View"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppThemeSecondary" />
+        <activity
+            android:name=".activity.NotesActivity"
+            android:label="Notes"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppThemeSecondary" />
+        <activity
+            android:name=".activity.ForecastActivity"
+            android:label="Forecast"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppThemeSecondary" />
+        <activity
+            android:name=".activity.LoanCalculatorActivity"
+            android:label="Loan Calculator"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppThemeSecondary" />
+        <activity
+            android:name=".activity.CurrencyConverterActivity"
+            android:label="Currency Converter"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppThemeSecondary" />
+        <activity
+            android:name=".activity.ReminderActivity"
+            android:label="Reminder"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppThemeSecondary" />
+        <activity
+            android:name=".activity.SettingsActivity"
+            android:label="Settings"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppThemeSecondary" />
+        <activity
+            android:name=".activity.AboutActivity"
+            android:label="About"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppThemeSecondary" />
+        <activity
+            android:name=".activity.TurnOnNetworkActivity"
+            android:label="No Network"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppThemeSecondary" />
     </application>
 
 </manifest>

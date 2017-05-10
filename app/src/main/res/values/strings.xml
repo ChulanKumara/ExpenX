@@ -7,7 +7,7 @@
     <string name="forgot_your_password">Forgot your Password?</string>
     <string name="expenx">ExpenX</string>
     <string name="login_with_google">LOGIN WITH GOOGLE</string>
-    <string name="or_via_email">───────────────or via Email───────────────</string>
+    <string name="or_via_email">───────or via Email───────</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="login">LOGIN</string>
@@ -45,20 +45,29 @@
     <string name="currency_converter_converted"></string>
     <string name="button_convert">CONVERT</string>
 
-    <string-array name="initcurrency_array">
-        <item></item>
-        <item></item>
-        <item></item>
-        <item></item>
-        <item></item>
-    </string-array>
-
-    <string-array name="fincurrency_array">
-        <item></item>
-        <item></item>
-        <item></item>
-        <item></item>
-        <item></item>
-    </string-array>
+   
+    <!--for calculator-->
+    <string name="one">1</string>
+    <string name="two">2</string>
+    <string name="three">3</string>
+    <string name="four">4</string>
+    <string name="five">5</string>
+    <string name="six">6</string>
+    <string name="seven">7</string>
+    <string name="eight">8</string>
+    <string name="nine">9</string>
+    <string name="zero">0</string>
+    <string name="ac">AC</string>
+    <string name="ok">OK</string>
+    <string name="clear">C</string>
+    <string name="percent">%</string>
+    <string name="divide">/</string>
+    <string name="multiply">x</string>
+    <string name="minus">-</string>
+    <string name="plus">+</string>
+    <string name="double_zero">00</string>
+    <string name="dot">.</string>
+    <string name="equal">=</string>
 
 </resources>
+

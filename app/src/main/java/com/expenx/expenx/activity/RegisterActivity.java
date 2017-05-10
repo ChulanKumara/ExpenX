@@ -23,6 +23,8 @@ import android.widget.Toast;
 
 import com.expenx.expenx.R;
 import com.expenx.expenx.core.MessageOutput;
+import com.expenx.expenx.model.Reminder;
+import com.expenx.expenx.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -55,7 +57,7 @@ public class RegisterActivity extends AppCompatActivity {
     private String password;
     private String image;
 
-    public static FirebaseAuth mAuth;
+    private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private DatabaseReference mDatabase;
     private StorageReference mStorage;
@@ -138,19 +140,22 @@ public class RegisterActivity extends AppCompatActivity {
 
                         uploadImage(userId);
 
-                        imageUrl = "users\\" + userId + "\\" + image;
+                        imageUrl = "users/" + userId + "/profileimage/" + image;
 
                         DatabaseReference currentUserDb = mDatabase.child(userId);
-                        currentUserDb.child("defaultCurrency").setValue("USD");
-                        currentUserDb.child("fName").setValue(firstName);
-                        currentUserDb.child("lName").setValue(lastName);
-                        currentUserDb.child("image").setValue(imageUrl);
+                        Reminder defaultReminder = new Reminder("weekly",true,14938269444L);
+                        User user = new User(firstName,lastName,imageUrl,"USD",defaultReminder);
+                        currentUserDb.setValue(user);
+
 
                         MessageOutput.dismissProgressDialog();
-                        Toast.makeText(RegisterActivity.this, "Successfull.. Please Login", Toast.LENGTH_LONG).show();
+                        Toast.makeText(RegisterActivity.this, "Successful.. Please Login", Toast.LENGTH_LONG).show();
                         Intent loginIntent = new Intent(RegisterActivity.this, LoginActivity.class);
-                        loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        loginIntent.putExtra("dontListenToAuthListener",1);
                         startActivity(loginIntent);
+                        RegisterActivity.this.finish();
+
+
 
                     }else{
                         MessageOutput.dismissProgressDialog();
@@ -184,6 +189,7 @@ public class RegisterActivity extends AppCompatActivity {
             }
 
         } catch (Exception e) {
+            e.printStackTrace();
             Toast.makeText(this, "Something went wrong", Toast.LENGTH_LONG)
                     .show();
         }
@@ -207,7 +213,7 @@ public class RegisterActivity extends AppCompatActivity {
         try {
             final Uri _uri = selectedImage;
 
-            StorageReference filePath = mStorage.child("users").child(UserId).child("profileimage").child(_uri.getLastPathSegment());
+            StorageReference filePath = mStorage.child("users").child(UserId).child("profileimage").child(image);
 
             filePath.putFile(_uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
@@ -216,6 +222,7 @@ public class RegisterActivity extends AppCompatActivity {
                 }
             });
         }catch(Exception ex){
+            ex.printStackTrace();
             Toast.makeText(this, "Something went wrong while uploading the image", Toast.LENGTH_LONG).show();
         }
     }

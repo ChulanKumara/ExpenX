@@ -1,65 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_currency_converter"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="5dp"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp"
-    android:paddingTop="16dp"
+    android:padding="@dimen/fab_margin"
     tools:context="com.expenx.expenx.activity.CurrencyConverterActivity">
 
-    <EditText
-        android:id="@+id/editTextAmount"
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/currency_converter_amount"
-        android:textColor="@color/colorText"
-        android:textColorHint="@color/colorText" />
-
-    <Spinner
-        android:id="@+id/initcurrency_spinner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/editTextAmount"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="13dp" />
-
-    <Spinner
-        android:id="@+id/fincurrency_spinner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/editTextAmount"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentStart="false"
-        android:layout_alignParentLeft="false"
-        android:layout_marginTop="13dp" />
+        android:orientation="horizontal"
+        android:weightSum="10"
+        android:id="@+id/linearLayoutCurrencyAmountEdit">
 
     <EditText
-        android:id="@+id/editTextConvertedAmount"
-        android:layout_width="match_parent"
+        android:id="@+id/editTextCurrencyAmount"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="@string/currency_converter_converted"
+        android:inputType="numberDecimal"
         android:textColor="@color/colorText"
+        android:backgroundTint="@color/colorText"
+        android:hint="Amount"
         android:textColorHint="@color/colorText"
-        android:layout_below="@+id/initcurrency_spinner"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="31dp" />
+        android:layout_weight="9" />
+
+        <ImageButton
+            android:id="@+id/imageButtonEditAmount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_calculate_amount"
+            android:background="@color/transparent"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayoutCurrencySpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/linearLayoutCurrencyAmountEdit"
+        android:orientation="horizontal"
+        android:weightSum="15">
+
+        <Spinner
+            android:id="@+id/spinnerLeftCurrency"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorText"
+            android:layout_weight="7"/>
+
+        <ImageButton
+            android:id="@+id/imageButtonSwapCurrency"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_swap_currency"
+            android:background="@drawable/button_currency_swap"
+            android:layout_weight="1" />
+
+        <Spinner
+            android:id="@+id/spinnerRightCurrency"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorText"
+
+            android:layout_weight="7"/>
+
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/editTextCurrencyResult"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/linearLayoutCurrencySpinner"
+        android:backgroundTint="@color/colorText"
+        android:enabled="false"
+        android:text="0"
+        android:textColor="@color/colorText" />
 
     <Button
-        android:id="@+id/buttonConvert"
+        android:id="@+id/convertCurrencyButton"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="45dp"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="13dp"
-        android:text="@string/button_convert"
+        android:background="@drawable/button_normal"
         android:textColor="@color/colorText"
-        android:background="@drawable/button_normal"/>
+        android:text="CONVERT" />
 
 </RelativeLayout>

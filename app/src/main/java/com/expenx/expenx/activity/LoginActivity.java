@@ -50,7 +50,7 @@ public class LoginActivity extends AppCompatActivity {
 
     Button mLoginButton, mLoginGoogleButton;
 
-    public FirebaseAuth mAuth;
+    private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     public DatabaseReference databaseReference;
 
@@ -59,7 +59,9 @@ public class LoginActivity extends AppCompatActivity {
     SharedPreferences preferences = null;
     SharedPreferences.Editor editor = null;
 
-    private static boolean isExpenxActivityLaunched = false;
+    int dontListenToAuthListener;
+
+    public static boolean isExpenxActivityLaunched = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,13 +70,19 @@ public class LoginActivity extends AppCompatActivity {
 
         preferences = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
 
+        dontListenToAuthListener = -1;
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            dontListenToAuthListener = extras.getInt("dontListenToAuthListener");
+        }
 
         mAuth = FirebaseAuth.getInstance();
+
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user != null) {
+                if (user != null && dontListenToAuthListener == -1) {
                     // User is signed in
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
 
@@ -83,10 +91,11 @@ public class LoginActivity extends AppCompatActivity {
                     editor.putString("email", user.getEmail());
                     editor.apply();
 
-                    if(!isExpenxActivityLaunched) {
+                    if (!isExpenxActivityLaunched) {
                         startActivity(new Intent(LoginActivity.this, ExpenxActivity.class));
                         isExpenxActivityLaunched = true;
                     }
+
                     LoginActivity.this.finish();
                 } else {
                     // User is signed out
@@ -213,6 +222,13 @@ public class LoginActivity extends AppCompatActivity {
                 signIn(mEmailText.getText().toString().trim(), mPasswordText.getText().toString().trim());
             }
         });
+
+        mCreateAccountText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+            }
+        });
     }
 
 
@@ -274,7 +290,7 @@ public class LoginActivity extends AppCompatActivity {
                                 editor.putString("email", mAuth.getCurrentUser().getEmail());
                                 editor.apply();
 
-                                if(!isExpenxActivityLaunched) {
+                                if (!isExpenxActivityLaunched) {
                                     startActivity(new Intent(LoginActivity.this, ExpenxActivity.class));
                                     isExpenxActivityLaunched = true;
                                 }
