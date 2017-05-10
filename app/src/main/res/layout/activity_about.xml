@@ -1,9 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_about"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingBottom="5dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="16dp"
     tools:context="com.expenx.expenx.activity.AboutActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <RelativeLayout
+        android:id="@+id/layoutCircleIn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/circleAroundE"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:contentDescription="@string/circle_of_e"
+            android:src="@drawable/circle_login_activity" />
+
+        <TextView
+            android:id="@+id/textViewE"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerInParent="false"
+            android:layout_centerVertical="false"
+            android:padding="0dp"
+            android:text="@string/e"
+            android:textColor="@color/colorText"
+            android:textSize="100sp" />
+
+        <TextView
+            android:id="@+id/textViewExpenx"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/expenx"
+            android:textColor="@color/colorText"
+            android:textSize="25sp"
+            android:layout_below="@+id/textViewE"
+            android:layout_centerHorizontal="true" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/textViewAboutText1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="This application is developed by"
+        android:textSize="18dp"
+        android:textColor="@color/colorText"
+        android:layout_marginTop="30dp"
+        android:layout_below="@+id/layoutCircleIn"
+        android:layout_centerHorizontal="true" />
+
+
+    <TextView
+        android:id="@+id/textViewAboutText2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SAVICK"
+        android:textSize="20dp"
+        android:textColor="@color/colorText"
+        android:layout_marginTop="11dp"
+        android:layout_below="@+id/textViewAboutText1"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/textViewAboutText3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorText"
+        android:text="If you come across any error
+ please feel free to email us
+at expenx.savick@gmail.com"
+        android:textSize="18dp"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/textViewAboutText2"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/textViewAboutText4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorText"
+        android:text="This is a university (UCD) group project completed
+       under MAD module to accomplish Android
+                            programming skills."
+        android:layout_above="@+id/textViewAllRightsAboutPage"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/textViewAllRightsAboutPage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:text="@string/all_rights_reserved_2017_savick"
+        android:textColor="@color/colorText" />
+
+
+</RelativeLayout>
