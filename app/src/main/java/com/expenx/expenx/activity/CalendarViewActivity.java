@@ -27,9 +27,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.sql.SQLOutput;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 public class CalendarViewActivity extends AppCompatActivity {
@@ -46,6 +48,9 @@ public class CalendarViewActivity extends AppCompatActivity {
     private FirebaseUser loggedUser = null;
     public User user = null;
     SharedPreferences sharedPreferences;
+
+    RecyclerView.Adapter adapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,9 +69,9 @@ public class CalendarViewActivity extends AppCompatActivity {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
                 dataSet.clear();
-                String date = dayOfMonth + "/" + month + "/" + year;
+                String date = dayOfMonth + "/" + (month + 1) + "/" + year;
                 convertDate(date);
-                loadLendTo(date);
+//                loadLendTo(date);
                 loadDebt(date);
                 loadExpense();
                 loadIncome();
@@ -75,49 +80,56 @@ public class CalendarViewActivity extends AppCompatActivity {
         });
 
         initViews();
-    }
-
-
-    public void loadLendTo(String date){
-
-        mDatabase.child("lendTo").child(sharedPreferences.getString("uid", null)).orderByChild("date").equalTo(date).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    LendTo lendTo = snapshot.getValue(LendTo.class);
-
-                    String type = "Lend From " + lendTo.lendFrom;
-                    String info = "Amout : " + lendTo.amount;
-                    DataModel dm = new DataModel(type,info);
-                    dataSet.add(dm);
-
-                }
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                MessageOutput.showSnackbarLongDuration(CalendarViewActivity.this, databaseError.getMessage());
-            }
-        });
 
     }
 
-    public void loadExpense(){
 
-        mDatabase.child("expense").child(sharedPreferences.getString("uid", null)).orderByChild("timestamp").equalTo(timeStamp).addValueEventListener(new ValueEventListener() {
+//    public void loadLendTo(String date) {
+//
+//        mDatabase.child("lendTo").child(sharedPreferences.getString("uid", null)).orderByChild("date").equalTo(date).addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//
+//                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+//                    LendTo lendTo = snapshot.getValue(LendTo.class);
+//
+//                    String type = "Lend From " + lendTo.lendFrom;
+//                    String info = "Amout : " + lendTo.amount;
+//                    DataModel dm = new DataModel(type, info);
+//                    dataSet.add(dm);
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//                MessageOutput.showSnackbarLongDuration(CalendarViewActivity.this, databaseError.getMessage());
+//            }
+//        });
+//
+//    }
+
+    public void loadExpense() {
+
+        mDatabase.child("expense").child(sharedPreferences.getString("uid", null)).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Expense expense = snapshot.getValue(Expense.class);
 
-                    String type = "Expense";
-                    String info = "Amout : " + expense.amount;
-                    DataModel dm = new DataModel(type,info);
-                    dataSet.add(dm);
+                    //System.out.println("_________________returnConvertDate(expense.timestamp)==timeStamp) " + returnConvertDate(expense.timestamp) + "==" + timeStamp);
 
+                    if (returnConvertDate(expense.timestamp) == timeStamp) {
+                        System.out.println("_________________Expense amount " + expense.amount);
+                        String type = expense.category + " Expense";;
+                        String info = "Amout : " + expense.amount;
+                        DataModel dm = new DataModel(type, info);
+                        dataSet.add(dm);
+                        initViews();
+                    }
                 }
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 MessageOutput.showSnackbarLongDuration(CalendarViewActivity.this, databaseError.getMessage());
@@ -126,22 +138,28 @@ public class CalendarViewActivity extends AppCompatActivity {
 
     }
 
-    public void loadIncome(){
+    public void loadIncome() {
 
-        mDatabase.child("income").child(sharedPreferences.getString("uid", null)).orderByChild("timestamp").equalTo(timeStamp).addValueEventListener(new ValueEventListener() {
+        mDatabase.child("income").child(sharedPreferences.getString("uid", null)).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Income income = snapshot.getValue(Income.class);
 
-                    String type = "Income";
-                    String info = "Amout : " + income.amount;
-                    DataModel dm = new DataModel(type,info);
-                    dataSet.add(dm);
+                    //System.out.println("_________________before " + income.timestamp + " now returnConvertDate(income.timestamp)==timeStamp)" + returnConvertDate(income.timestamp) + "==" + timeStamp);
 
+                    if (returnConvertDate(income.timestamp) == timeStamp) {
+                        System.out.println("_______________income amount " + income.amount);
+                        String type = income.category + " Income";
+                        String info = "Amout : " + income.amount;
+                        DataModel dm = new DataModel(type, info);
+                        dataSet.add(dm);
+                        initViews();
+                    }
                 }
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 MessageOutput.showSnackbarLongDuration(CalendarViewActivity.this, databaseError.getMessage());
@@ -150,7 +168,7 @@ public class CalendarViewActivity extends AppCompatActivity {
 
     }
 
-    public void loadDebt(String date){
+    public void loadDebt(String date) {
 
         mDatabase.child("debt").child(sharedPreferences.getString("uid", null)).orderByChild("date").equalTo(date).addValueEventListener(new ValueEventListener() {
             @Override
@@ -159,13 +177,14 @@ public class CalendarViewActivity extends AppCompatActivity {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     BorrowFrom borrowFrom = snapshot.getValue(BorrowFrom.class);
 
-                    String type = "Income";
+                    String type = "Debt";
                     String info = "Amout : " + borrowFrom.amount;
-                    DataModel dm = new DataModel(type,info);
+                    DataModel dm = new DataModel(type, info);
                     dataSet.add(dm);
-
+                    initViews();
                 }
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 MessageOutput.showSnackbarLongDuration(CalendarViewActivity.this, databaseError.getMessage());
@@ -175,49 +194,68 @@ public class CalendarViewActivity extends AppCompatActivity {
     }
 
     //Convert Long TimeStamp To Standara Date
-    private void convertDate(String dateStr){
+    private void convertDate(String dateStr) {
         try {
             DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
             Date date = dateFormat.parse(dateStr);
-            long time = (long)date.getTime()/1000;
-            timeStamp =  time;
-        }catch(Exception ex){
-
+            long time = (long) date.getTime() / 1000;
+            timeStamp = time;
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 
-    private void initViews(){
+    private long returnConvertDate(long dateLng) {
+        long result = 0;
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(dateLng);
 
-        RecyclerView recyclerView = (RecyclerView)findViewById(R.id.card_recycler_view);
+        String dateStr = String.valueOf(calendar.get(Calendar.DAY_OF_MONTH)) + "/" + String.valueOf(calendar.get(Calendar.MONTH) + 1) + "/" + String.valueOf(calendar.get(Calendar.YEAR));
+        try {
+            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            Date date = dateFormat.parse(dateStr);
+            result = (long) date.getTime() / 1000;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            result = 0;
+        }
+        return result;
+    }
+
+    private void initViews() {
+
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.card_recycler_view);
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
 
-        RecyclerView.Adapter adapter = new DataAdapter(dataSet);
+        DataAdapter adapter = new DataAdapter(dataSet);
         recyclerView.setAdapter(adapter);
 
-        recyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
-            GestureDetector gestureDetector = new GestureDetector(getApplicationContext(), new GestureDetector.SimpleOnGestureListener() {
-
-                @Override public boolean onSingleTapUp(MotionEvent e) {
-                    return true;
-                }
-
-            });
-            @Override
-            public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
-                return false;
-            }
-
-            @Override
-            public void onTouchEvent(RecyclerView rv, MotionEvent e) {
-
-            }
-
-            @Override
-            public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
-
-            }
-        });
+//        recyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
+//            GestureDetector gestureDetector = new GestureDetector(getApplicationContext(), new GestureDetector.SimpleOnGestureListener() {
+//
+//                @Override
+//                public boolean onSingleTapUp(MotionEvent e) {
+//                    return true;
+//                }
+//
+//            });
+//
+//            @Override
+//            public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
+//                return false;
+//            }
+//
+//            @Override
+//            public void onTouchEvent(RecyclerView rv, MotionEvent e) {
+//
+//            }
+//
+//            @Override
+//            public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+//
+//            }
+//        });
     }
 }

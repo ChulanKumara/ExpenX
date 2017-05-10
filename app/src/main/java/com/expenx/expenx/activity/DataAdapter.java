@@ -32,7 +32,7 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
     public void onBindViewHolder(DataAdapter.ViewHolder viewHolder, int i) {
 
         viewHolder.rType.setText(dataSet.get(i).getTransactionType());
-        viewHolder.rType.setText(dataSet.get(i).getTransactionInfo());
+        viewHolder.rInfo.setText(dataSet.get(i).getTransactionInfo());
     }
 
     @Override

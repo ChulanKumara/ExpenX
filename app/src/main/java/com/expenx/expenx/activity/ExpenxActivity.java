@@ -344,7 +344,7 @@ public class ExpenxActivity extends AppCompatActivity
     protected void onPause() {
         super.onPause();
         LoginActivity.isExpenxActivityLaunched = false;
-        this.finishAffinity(); //exit whole android application
+
     }
 
     @Override
@@ -354,6 +354,7 @@ public class ExpenxActivity extends AppCompatActivity
             drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
+            this.finishAffinity(); //exit whole android application
         }
     }
 

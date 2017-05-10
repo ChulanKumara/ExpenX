@@ -6,8 +6,8 @@ package com.expenx.expenx.core;
 
 public class DataModel {
 
-    String TransactionType;
-    String TransactionInfo;
+    private String TransactionType;
+    private String TransactionInfo;
 
     public DataModel(String TransactionType, String TransactionInfo) {
         this.TransactionType = TransactionType;
