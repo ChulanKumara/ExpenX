@@ -25,7 +25,7 @@ public class AboutActivity extends AppCompatActivity {
 
     //EditText mEmailText, mPasswordText;
 
-    TextView mExpenxText, mEText, mThisAppDevText, mGroupNameText, mEmailComText, mProjectDescText, mAllRightsText;
+    TextView mExpenxText, mEText, mThisAppDevText, mGroupNameText, mEmailComText, mProjectDescText, mAllRightsText, mGitRepo, mGitRepoLink;
 
     //Button mLoginButton, mLoginGoogleButton;
 
@@ -42,6 +42,8 @@ public class AboutActivity extends AppCompatActivity {
         mEmailComText = (TextView) findViewById(R.id.textViewAboutText3);
         mProjectDescText = (TextView) findViewById(R.id.textViewAboutText4);
         mAllRightsText = (TextView) findViewById(R.id.textViewAllRightsAboutPage);
+        mGitRepo = (TextView) findViewById(R.id.textViewAboutTextGit);
+        mGitRepoLink = (TextView) findViewById(R.id.textViewAboutTextGitLink);
 
         //animation -- start
         final RotateAnimation rotateAnimationCircle = new RotateAnimation(0, 90, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
@@ -91,7 +93,7 @@ public class AboutActivity extends AppCompatActivity {
         scaleAnimationCircle.start();
 
 
-        final View[] views = new View[]{mThisAppDevText, mGroupNameText, mEmailComText, mProjectDescText, mAllRightsText};
+        final View[] views = new View[]{mThisAppDevText, mGroupNameText, mEmailComText, mProjectDescText, mGitRepo, mGitRepoLink, mAllRightsText};
 
         long delayBetweenAnimations = 100l;
 

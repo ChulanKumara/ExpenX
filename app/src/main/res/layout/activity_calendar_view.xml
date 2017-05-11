@@ -33,8 +33,21 @@
         android:id="@+id/card_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/fab_margin"
+        android:layout_marginTop="@dimen/fab_margin"
+        android:layout_marginLeft="@dimen/fab_margin"
+        android:layout_marginRight="@dimen/fab_margin"
         android:background="@color/colorText"
         android:scrollbars="vertical" />
+
+    <TextView
+        android:id="@+id/textViewClickOnItem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorText"
+        android:layout_marginTop="2dp"
+        android:textSize="10sp"
+        android:layout_marginLeft="@dimen/fab_margin"
+        android:layout_above="@+id/buttonAddNote"
+        android:text="Click on highlighted dates to see details."/>
 
 </LinearLayout>

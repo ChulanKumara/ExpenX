@@ -40,11 +40,11 @@
             android:id="@+id/textViewExpenx"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/textViewE"
+            android:layout_centerHorizontal="true"
             android:text="@string/expenx"
             android:textColor="@color/colorText"
-            android:textSize="25sp"
-            android:layout_below="@+id/textViewE"
-            android:layout_centerHorizontal="true" />
+            android:textSize="25sp" />
 
     </RelativeLayout>
 
@@ -52,48 +52,73 @@
         android:id="@+id/textViewAboutText1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="This application is developed by"
-        android:textSize="18dp"
-        android:textColor="@color/colorText"
-        android:layout_marginTop="30dp"
         android:layout_below="@+id/layoutCircleIn"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:text="This application is developed by"
+        android:textColor="@color/colorText"
+        android:textSize="18dp" />
 
 
     <TextView
         android:id="@+id/textViewAboutText2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="SAVICK"
-        android:textSize="20dp"
-        android:textColor="@color/colorText"
-        android:layout_marginTop="11dp"
         android:layout_below="@+id/textViewAboutText1"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="11dp"
+        android:text="SAVICK"
+        android:textColor="@color/colorText"
+        android:textSize="25dp" />
 
     <TextView
         android:id="@+id/textViewAboutText3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/colorText"
-        android:text="If you come across any error
- please feel free to email us
-at expenx.savick@gmail.com"
-        android:textSize="18dp"
-        android:layout_marginTop="20dp"
         android:layout_below="@+id/textViewAboutText2"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:gravity="center_horizontal"
+        android:text="If you come across any error\n please feel free to email us at\n expenx.savick@gmail.com"
+        android:textAlignment="center"
+        android:textColor="@color/colorText" />
 
     <TextView
         android:id="@+id/textViewAboutText4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/textViewAboutTextGit"
+        android:layout_centerHorizontal="true"
+        android:gravity="center_horizontal"
+        android:text="This is a university (UCD) group project complete\n under MAD module to accomplish\n Android programming skills."
+        android:textAlignment="center"
+        android:textColor="@color/colorText" />
+
+    <TextView
+        android:id="@+id/textViewAboutTextGit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textViewAboutTextGitLink"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:gravity="center_horizontal"
+        android:text="GitHub Repository"
+        android:textAlignment="center"
         android:textColor="@color/colorText"
-        android:text="This is a university (UCD) group project completed
-       under MAD module to accomplish Android
-                            programming skills."
+        android:textSize="10sp" />
+
+    <TextView
+        android:id="@+id/textViewAboutTextGitLink"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_above="@+id/textViewAllRightsAboutPage"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:autoLink="web"
+        android:gravity="center_horizontal"
+        android:linksClickable="true"
+        android:text="https://github.com/skaveesh/ExpenX"
+        android:textAlignment="center"
+        android:textColor="@color/colorText" />
 
     <TextView
         android:id="@+id/textViewAllRightsAboutPage"
