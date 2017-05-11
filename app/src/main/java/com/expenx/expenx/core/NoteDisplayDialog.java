@@ -5,12 +5,12 @@ import android.app.Dialog;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.expenx.expenx.R;
-import com.expenx.expenx.activity.ExpenxActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
@@ -27,10 +27,18 @@ public class NoteDisplayDialog {
     private ImageView mImageViewNoteDialogImage;
 
     public void showDialog(final Activity activity, NoteDataModel noteDataModel) {
+
         final Dialog dialog = new Dialog(activity);
+
+        WindowManager.LayoutParams dialogLayoutParameters = new WindowManager.LayoutParams();
+        dialogLayoutParameters.copyFrom(dialog.getWindow().getAttributes());
+        dialogLayoutParameters.width = WindowManager.LayoutParams.MATCH_PARENT;
+        dialogLayoutParameters.height = WindowManager.LayoutParams.WRAP_CONTENT;
+
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(true);
         dialog.setContentView(R.layout.notes_display_dialog);
+        dialog.getWindow().setAttributes(dialogLayoutParameters);
 
         mTextViewNoteDialogTitle = (TextView) dialog.findViewById(R.id.textViewNoteDialogTitle);
         mTextViewNoteDialogDescription = (TextView) dialog.findViewById(R.id.textViewNoteDialogDescription);

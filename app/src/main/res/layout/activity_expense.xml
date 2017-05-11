@@ -1,9 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="@dimen/fab_margin"
     tools:context="com.expenx.expenx.activity.ExpenseActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <LinearLayout
+        android:id="@+id/linearLayoutExpenseAmountEdit"
+        android:layout_width="336dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="10"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="0dp">
+
+        <EditText
+            android:id="@+id/editTextExpenseAmount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="9"
+            android:backgroundTint="@color/colorText"
+            android:ems="10"
+            android:hint="Amount"
+            android:inputType="numberDecimal"
+            android:textColor="@color/colorText"
+            android:textColorHint="@color/colorText" />
+
+        <ImageButton
+            android:id="@+id/imageButtonExpenseEditAmount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/transparent"
+            android:src="@drawable/ic_calculate_amount" />
+
+    </LinearLayout>
+
+    <Spinner
+        android:id="@+id/spinnerExpenseCategory"
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/linearLayoutExpenseAmountEdit"
+        android:backgroundTint="@color/colorText"
+        android:entries="@array/income_expense_category" />
+
+    <EditText
+        android:id="@+id/editTextExpenseDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/spinnerExpenseCategory"
+        android:backgroundTint="@color/colorText"
+        android:ems="10"
+        android:hint="Description"
+        android:inputType="textPersonName"
+        android:textColor="@color/colorText"
+        android:textColorHint="@color/colorText" />
+
+    <Spinner
+        android:id="@+id/spinnerExpensePaymentMethod"
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/editTextExpenseDescription"
+        android:backgroundTint="@color/colorText"
+        android:entries="@array/payment_methods" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <Button
+            android:id="@+id/buttonCancelExpense"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginRight="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/button_normal"
+            android:text="CANCEL"
+            android:textColor="@color/colorText" />
+
+        <Button
+            android:id="@+id/buttonSaveExpense"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/button_normal"
+            android:text="SAVE"
+            android:textColor="@color/colorText" />
+
+    </LinearLayout>
+
+</RelativeLayout>
