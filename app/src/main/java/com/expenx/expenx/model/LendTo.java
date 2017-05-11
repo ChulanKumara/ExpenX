@@ -3,6 +3,7 @@ package com.expenx.expenx.model;
 import com.google.firebase.database.Exclude;
 
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,32 +15,40 @@ public class LendTo {
 
     public String pushId;
     public double amount;
-    public String lendFrom;
-    public Long lendDate;
-    public Long dueDate;
+    public String name;
+    public long date;
+    public long dueDate;
     public String description;
     public String paymentMethod;
     public String refCheckNo;
+    public String type;
 
-    public LendTo(double amount, String lendFrom, Long lendDate, Long dueDate, String description, String paymentMethod, String refCheckNo) {
+
+    public LendTo(double amount, String lendFrom, long lendDate, long dueDate, String description, String paymentMethod, String refCheckNo,String type) {
         this.amount = amount;
-        this.lendFrom = lendFrom;
-        this.lendDate = lendDate;
+        this.name = lendFrom;
+        this.date = lendDate;
         this.dueDate = dueDate;
         this.description = description;
         this.paymentMethod = paymentMethod;
         this.refCheckNo = refCheckNo;
+        this.type=type;
+
+    }
+    public LendTo() {
+
     }
 
-    public LendTo() {
+    public void setPushId(String pushId) {
+        this.pushId = pushId;
     }
 
     @Exclude
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
         result.put("amount", amount);
-        result.put("lendFrom", lendFrom);
-        result.put("lendDate", lendDate);
+        result.put("lendFrom", name);
+        result.put("lendDate", date);
         result.put("dueDate", dueDate);
         result.put("description", description);
         result.put("paymentMethod", paymentMethod);

@@ -14,32 +14,36 @@ public class BorrowFrom {
 
     public String pushId;
     public double amount;
-    public String borrowedFrom;
-    public Long borrowedDate;
+    public String name;
+    public Long date;
     public Long dueDate;
     public String description;
     public String paymentMethod;
-    public long refCheckNo;
+    public String refCheckNo;
+    public String type;
 
-    public BorrowFrom(double amount, String borrowedFrom, Long borrowedDate, Long dueDate, String description, String paymentMethod, long refCheckNo) {
+    public BorrowFrom(double amount, String borrowedFrom, Long borrowedDate, Long dueDate, String description, String paymentMethod, String refCheckNo,String type) {
         this.amount = amount;
-        this.borrowedFrom = borrowedFrom;
-        this.borrowedDate = borrowedDate;
+        this.name = borrowedFrom;
+        this.date = borrowedDate;
         this.dueDate = dueDate;
         this.description = description;
         this.paymentMethod = paymentMethod;
         this.refCheckNo = refCheckNo;
+        this.type=type;
     }
 
     public BorrowFrom() {
     }
-
+    public void setPushId(String pushId) {
+        this.pushId = pushId;
+    }
     @Exclude
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
         result.put("amount", amount);
-        result.put("lendFrom", borrowedFrom);
-        result.put("lendDate", borrowedDate);
+        result.put("lendFrom", name);
+        result.put("lendDate", date);
         result.put("dueDate", dueDate);
         result.put("description", description);
         result.put("paymentMethod", paymentMethod);

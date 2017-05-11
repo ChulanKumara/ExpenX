@@ -30,4 +30,11 @@
     <color name="secondary_text">#727272</color>
     <color name="icons">#FFFFFF</color>
     <color name="divider">#B6B6B6</color>
+
+    <!--Debt Activity-->
+    <color name="colorFrame">#f7f7f7</color>
+    <color name="colorGreen">#218c23</color>
+    <color name="colorRed">#cc0c0c</color>
+    <color name="colorBlack">#000000</color>
+
 </resources>

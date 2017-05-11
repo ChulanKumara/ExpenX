@@ -1,9 +1,150 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.expenx.expenx.activity.DebtActivity">
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-</android.support.constraint.ConstraintLayout>
+    <Button
+        android:id="@+id/lend_to_button"
+        android:layout_width="170dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/button_normal"
+        android:text="@string/lend"
+        android:textColor="@color/colorText"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/button_borrow"
+        android:layout_toStartOf="@+id/button_borrow"
+        android:layout_marginRight="18dp"
+        android:layout_marginEnd="18dp" />
+
+    <Button
+        android:id="@+id/button_borrow"
+        android:layout_width="170dp"
+        android:layout_height="45dp"
+        android:background="@drawable/button_normal"
+        android:text="@string/borrow"
+        android:textColor="@color/colorText"
+        android:layout_alignBaseline="@+id/lend_to_button"
+        android:layout_alignBottom="@+id/lend_to_button"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="390dp"
+        android:id="@+id/frameLayout"
+        android:background="@color/colorFrame"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <ListView
+            android:id="@+id/listView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:id="@+id/frameLayout2"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/frameLayout">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/editText5"
+                android:layout_width="110dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:background="@android:color/transparent"
+                android:inputType="textPersonName"
+                android:text="Credit"
+                android:textAlignment="center"
+                android:textColor="@color/colorText"
+                android:textSize="40px" />
+
+            <TextView
+                android:id="@+id/editText6"
+                android:layout_width="110dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="22dp"
+                android:layout_marginStart="22dp"
+                android:background="@android:color/transparent"
+                android:inputType="textPersonName"
+                android:text="Balance"
+                android:textAlignment="center"
+                android:textColor="@color/colorText"
+                android:textSize="40px" />
+
+            <TextView
+                android:id="@+id/text_balance"
+                android:layout_width="110dp"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/editText6"
+                android:layout_alignStart="@+id/editText6"
+                android:layout_below="@+id/editText6"
+                android:background="@android:color/transparent"
+                android:inputType="textPersonName"
+                android:text="0"
+                android:textAlignment="center"
+                android:textColor="@color/colorGreen"
+                android:textSize="40px"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/text_credit"
+                android:layout_width="110dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/editText5"
+                android:layout_centerHorizontal="true"
+                android:background="@android:color/transparent"
+                android:inputType="textPersonName"
+                android:text="0"
+                android:textAlignment="center"
+                android:textColor="@color/colorGreen"
+                android:textSize="40px"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/text_debt"
+                android:layout_width="110dp"
+                android:layout_height="wrap_content"
+                android:layout_alignEnd="@+id/editText7"
+                android:layout_alignRight="@+id/editText7"
+                android:layout_below="@+id/editText7"
+                android:background="@android:color/transparent"
+                android:inputType="textPersonName"
+                android:text="0"
+                android:textAlignment="center"
+                android:textColor="@color/colorRed"
+                android:textSize="40px"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/editText7"
+                android:layout_width="110dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginEnd="11dp"
+                android:layout_marginRight="11dp"
+                android:background="@android:color/transparent"
+                android:text="Debt"
+                android:textAlignment="center"
+                android:textColor="@color/colorText"
+                android:textSize="40px" />
+        </RelativeLayout>
+    </FrameLayout>
+
+</RelativeLayout>

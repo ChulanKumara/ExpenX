@@ -102,6 +102,16 @@
             android:label="Add Note"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppThemeSecondary" />
+        <activity
+            android:name=".activity.LendToActivity"
+            android:label="Lent To"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppThemeSecondary" />
+        <activity
+            android:name=".activity.BorrowFromActivity"
+            android:label="Borrow From"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppThemeSecondary" />
     </application>
 
 </manifest>

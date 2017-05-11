@@ -92,5 +92,45 @@
         <item>Other</item>
     </string-array>
 
+    <!--Debt Activity-->
+
+    <string name="lend">LEND TO</string>
+
+    <string name="borrow">BORROW FROM</string>
+
+    <string name="lend_to_name">Lend to</string>
+
+    <string name="lend_to_amount">Amount</string>
+
+    <string name="lend_to_date">Date</string>
+
+    <string name="lend_to_due_date">Due Date</string>
+
+    <string name="lend_to_payment">Payment Method</string>
+
+    <string name="lend_to_ref">Ref/Check No</string>
+
+    <string name="lend_to_disc">Description</string>
+
+    <string name="borrow_name">Borrow From</string>
+
+    <string name="borrow_amount">Amount</string>
+
+    <string name="borrow_date">Date</string>
+
+    <string name="borrow_due_date">Due Date</string>
+
+    <string name="borrow_payment">Payment Method</string>
+
+    <string name="borrow_ref">Ref/Check No</string>
+
+    <string name="borrow_desc">Description</string>
+
+    <string name="action1">Action1</string>
+
+    <string name="action2">Action2</string>
+
+    <string name="action3">Action 3</string>
+
 </resources>
 
