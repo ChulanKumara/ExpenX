@@ -67,8 +67,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/editTextIncomeDescription"
-        android:backgroundTint="@color/colorText"
-        android:entries="@array/payment_methods" />
+        android:backgroundTint="@color/colorText" />
 
     <LinearLayout
         android:layout_width="match_parent"

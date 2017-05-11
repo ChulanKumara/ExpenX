@@ -104,7 +104,7 @@
             android:theme="@style/BaseAppThemeSecondary" />
         <activity
             android:name=".activity.LendToActivity"
-            android:label="Lent To"
+            android:label="Lend To"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppThemeSecondary" />
         <activity

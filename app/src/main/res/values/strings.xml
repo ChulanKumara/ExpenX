@@ -78,20 +78,6 @@
         <item>Other</item>
     </string-array>
 
-    <string-array name="payment_methods">
-        <item>Payment Method</item>
-        <item>Cash</item>
-        <item>Cheque</item>
-        <item>Money Order Payment</item>
-        <item>Credit Card Payment</item>
-        <item>Debit Card Payment</item>
-        <item>Online Payment</item>
-        <item>Gift Card</item>
-        <item>Voucher</item>
-        <item>Bitcoin</item>
-        <item>Other</item>
-    </string-array>
-
     <!--Debt Activity-->
 
     <string name="lend">LEND TO</string>

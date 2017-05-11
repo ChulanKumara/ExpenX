@@ -1,224 +1,150 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/fab_margin">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="10"
+        android:id="@+id/linearLayoutLendToNameEdit">
 
-    <Button
-        android:id="@+id/button_lend_name"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:layout_above="@+id/custom_amount"
-        android:layout_alignEnd="@+id/custom_name"
-        android:layout_alignRight="@+id/custom_name" />
+        <EditText
+            android:id="@+id/custom_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:textColor="@color/colorText"
+            android:backgroundTint="@color/colorText"
+            android:hint="Name"
+            android:textColorHint="@color/colorText"
+            android:layout_weight="9" />
+
+        <ImageButton
+            android:id="@+id/button_lend_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_select_contact"
+            android:background="@color/transparent"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="10"
+        android:layout_below="@id/linearLayoutLendToNameEdit"
+        android:id="@+id/linearLayoutLendToAmoutEdit">
+
+        <EditText
+            android:id="@+id/custom_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="numberDecimal"
+            android:textColor="@color/colorText"
+            android:backgroundTint="@color/colorText"
+            android:hint="Amount"
+            android:textColorHint="@color/colorText"
+            android:layout_weight="9" />
+
+        <ImageButton
+            android:id="@+id/button_lend_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_calculate_amount"
+            android:background="@color/transparent"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
 
     <EditText
-        android:id="@+id/custom_desc"
-        android:layout_width="340dp"
+        android:id="@+id/custom_date_lend"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/custom__ref"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:textColor="@color/colorText"
-        android:layout_toEndOf="@+id/textViewDate"
-        android:layout_toRightOf="@+id/textViewDate" />
-
-    <EditText
-        android:id="@+id/custom_name"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="38dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:textColor="@color/colorText"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-
-    <EditText
-        android:id="@+id/custom__ref"
-        android:layout_width="340dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:textColor="@color/colorText"
-        android:layout_below="@+id/custom_spinner_payment"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_toRightOf="@+id/textViewDate"
-        android:layout_toEndOf="@+id/textViewDate" />
-
-    <EditText
-        android:id="@+id/custom_amount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/custom_name"
-        android:layout_alignLeft="@+id/custom_name"
-        android:layout_alignRight="@+id/custom_name"
-        android:layout_alignStart="@+id/custom_name"
-        android:layout_below="@+id/custom_name"
-        android:ems="10"
-        android:inputType="number"
-        android:textColor="@color/colorText" />
-
-    <EditText
-        android:id="@+id/custom_date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-        android:ems="10"
+        android:hint="Lend Date"
         android:inputType="none"
         android:textColor="@color/colorText"
-        android:layout_below="@+id/button_lend_amount"
-        android:layout_toLeftOf="@+id/button_lend_amount"
-        android:layout_toStartOf="@+id/button_lend_amount"
-        android:layout_marginRight="17dp"
-        android:layout_marginEnd="17dp" />
+        android:textColorHint="@color/colorText"
+        android:layout_below="@+id/linearLayoutLendToAmoutEdit"
+        android:backgroundTint="@color/colorText"/>
 
     <EditText
-        android:id="@+id/custom_due_date"
-        android:layout_width="wrap_content"
+        android:id="@+id/custom_due_date_lend"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/custom_date"
-        android:layout_alignRight="@+id/custom_date"
-        android:layout_below="@+id/custom_date"
         android:ems="10"
-        android:inputType="date"
+        android:hint="Due Date"
+        android:inputType="none"
         android:textColor="@color/colorText"
-        android:layout_toEndOf="@+id/button_borrow_clear"
-        android:layout_alignLeft="@+id/custom_date"
-        android:layout_alignStart="@+id/custom_date" />
+        android:textColorHint="@color/colorText"
+        android:layout_below="@+id/custom_date_lend"
+        android:backgroundTint="@color/colorText"/>
 
     <Spinner
         android:id="@+id/custom_spinner_payment"
-        android:layout_width="200dp"
-        android:layout_height="30dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/custom_due_date"
-        android:layout_marginTop="24dp"
-        android:text="@string/lend_to_payment"
-        android:textColor="@color/colorText" />
-
-    <TextView
-        android:id="@+id/textViewAmount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/lend_to_payment"
-        android:textColor="@color/colorText"
-        android:textSize="22dp"
-        android:textStyle="bold"
-        android:layout_alignTop="@+id/custom_spinner_payment"
-        android:layout_alignLeft="@+id/textView6"
-        android:layout_alignStart="@+id/textView6" />
-
-    <Button
-        android:id="@+id/button_borrow_clear"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:text="Clear"
-        android:layout_marginBottom="20dp"
-        android:background="@color/colorButtonBackground"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="37dp"
-        android:layout_marginStart="37dp" />
-
-    <Button
-        android:id="@+id/button_lend_add"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:background="@color/colorButtonBackground"
-        android:text="Add"
-        android:layout_alignBaseline="@+id/button_borrow_clear"
-        android:layout_alignBottom="@+id/button_borrow_clear"
-        android:layout_toRightOf="@+id/button_borrow_clear"
-        android:layout_toEndOf="@+id/button_borrow_clear"
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp" />
-
-    <Button
-        android:id="@+id/button_lend_amount"
-        android:layout_width="45dp"
+        android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:layout_alignBaseline="@+id/custom_amount"
-        android:layout_alignBottom="@+id/custom_amount"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_below="@+id/custom_due_date_lend"
+        android:backgroundTint="@color/colorText"
+        android:textColor="@color/colorText"/>
 
-    <TextView
-        android:id="@+id/Lend_To"
-        android:layout_width="wrap_content"
+    <EditText
+        android:id="@+id/custom__ref"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Due Date"
+        android:ems="10"
+        android:hint="Ref/Cheque No."
+        android:inputType="none"
         android:textColor="@color/colorText"
-        android:textSize="22dp"
-        android:textStyle="bold"
-        android:layout_alignBottom="@+id/custom_due_date"
-        android:layout_alignLeft="@+id/textViewDueDate"
-        android:layout_alignStart="@+id/textViewDueDate" />
+        android:textColorHint="@color/colorText"
+        android:layout_below="@+id/custom_spinner_payment"
+        android:backgroundTint="@color/colorText"/>
 
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="wrap_content"
+    <EditText
+        android:id="@+id/custom_desc"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Date"
+        android:ems="10"
+        android:hint="Description"
+        android:inputType="none"
         android:textColor="@color/colorText"
-        android:textSize="22dp"
-        android:textStyle="bold"
-        android:layout_above="@+id/custom_due_date"
-        android:layout_alignRight="@+id/Lend_To"
-        android:layout_alignEnd="@+id/Lend_To" />
+        android:textColorHint="@color/colorText"
+        android:layout_below="@+id/custom__ref"
+        android:backgroundTint="@color/colorText"/>
 
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Amount"
-        android:textColor="@color/colorText"
-        android:textSize="22dp"
-        android:textStyle="bold"
-        android:layout_alignBottom="@+id/custom_amount"
-        android:layout_toLeftOf="@+id/custom_amount"
-        android:layout_toStartOf="@+id/custom_amount" />
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:weightSum="2">
 
-    <TextView
-        android:id="@+id/textView7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Lend to"
-        android:textColor="@color/colorText"
-        android:textSize="22dp"
-        android:textStyle="bold"
-        android:layout_above="@+id/custom_amount"
-        android:layout_toLeftOf="@+id/custom_name"
-        android:layout_toStartOf="@+id/custom_name" />
+        <Button
+            android:id="@+id/button_lend_clear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="CANCEL"
+            android:background="@color/colorButtonBackground"
+            android:layout_marginRight="5dp"
+            android:layout_weight="1"/>
 
-    <TextView
-        android:id="@+id/textViewDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Description"
-        android:textColor="@color/colorText"
-        android:textSize="22dp"
-        android:textStyle="bold"
-        android:layout_alignBottom="@+id/custom_desc"
-        android:layout_alignLeft="@+id/textViewDueDate"
-        android:layout_alignStart="@+id/textViewDueDate" />
-
-    <TextView
-        android:id="@+id/textViewDueDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Ref/Check"
-        android:textColor="@color/colorText"
-        android:textSize="22dp"
-        android:textStyle="bold"
-        android:layout_above="@+id/custom_desc"
-        android:layout_alignLeft="@+id/textView7"
-        android:layout_alignStart="@+id/textView7" />
-
+        <Button
+            android:id="@+id/button_lend_add"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorButtonBackground"
+            android:layout_marginLeft="5dp"
+            android:text="Add"
+            android:layout_weight="1"/>
+    </LinearLayout>
 
 </RelativeLayout>

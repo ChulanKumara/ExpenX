@@ -40,10 +40,8 @@
 
     <Spinner
         android:id="@+id/spinnerExpenseCategory"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
         android:layout_below="@+id/linearLayoutExpenseAmountEdit"
         android:backgroundTint="@color/colorText"
         android:entries="@array/income_expense_category" />
@@ -62,13 +60,11 @@
 
     <Spinner
         android:id="@+id/spinnerExpensePaymentMethod"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
         android:layout_below="@+id/editTextExpenseDescription"
         android:backgroundTint="@color/colorText"
-        android:entries="@array/payment_methods" />
+         />
 
     <LinearLayout
         android:layout_width="match_parent"

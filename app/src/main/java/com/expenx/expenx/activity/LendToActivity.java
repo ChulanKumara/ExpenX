@@ -22,11 +22,13 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.expenx.expenx.R;
+import com.expenx.expenx.core.CalculatorDialog;
 import com.expenx.expenx.model.LendTo;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -43,32 +45,32 @@ import java.util.Locale;
 public class LendToActivity extends AppCompatActivity {
 
 
-    public DatabaseReference mDatabase,mDatabase2;
+    public DatabaseReference mDatabase, mDatabase2;
     public FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
-
 
 
     private String TAG = "expenxtag";
     private static final String REQUIRED = "Required";
 
 
-    EditText mLendToName,mAmount,mDate,mDueDate,mRef,mDesc ;
+    EditText mLendToName, mAmount, mDate, mDueDate, mRef, mDesc;
     TextView errorText;
-    Button mAddBtn,calander,btnContacts;
+    Button mAddBtn, mClear;
+    ImageButton btnContacts, mEditAmount;
     Spinner mPayment;
-    final Calendar myCalendar = Calendar.getInstance();
-    final Calendar myCalendar_due = Calendar.getInstance();
-     Spinner mspinner;
+    Calendar myCalendar = Calendar.getInstance();
+    Calendar myCalendar_due = Calendar.getInstance();
+    Spinner mspinner;
 
     SharedPreferences preferences = null;
     SharedPreferences.Editor editor = null;
     private static final int PICK_CONTACT = 1000;
 
+    DatePickerDialog.OnDateSetListener date, date2;
+
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
-
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lend_to);
@@ -78,7 +80,7 @@ public class LendToActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth){
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
                     // User is signed in
@@ -99,33 +101,35 @@ public class LendToActivity extends AppCompatActivity {
         };
 
 
-        mAddBtn = (Button)findViewById(R.id.button_lend_add);
-        btnContacts = (Button) findViewById(R.id.button_lend_name);
-        mLendToName=(EditText)findViewById(R.id.custom_name);
-        mAmount=(EditText)findViewById(R.id.custom_amount);
-        mDate=(EditText)findViewById(R.id.custom_date);
-        mDueDate=(EditText)findViewById(R.id.custom_due_date);
+        mAddBtn = (Button) findViewById(R.id.button_lend_add);
+        mClear = (Button) findViewById(R.id.button_lend_clear);
+        btnContacts = (ImageButton) findViewById(R.id.button_lend_name);
+        mEditAmount = (ImageButton) findViewById(R.id.button_lend_amount);
+        mLendToName = (EditText) findViewById(R.id.custom_name);
+        mAmount = (EditText) findViewById(R.id.custom_amount);
+        mDate = (EditText) findViewById(R.id.custom_date_lend);
+        mDueDate = (EditText) findViewById(R.id.custom_due_date_lend);
         mspinner = (Spinner) findViewById(R.id.custom_spinner_payment);
 
-        mDatabase= FirebaseDatabase.getInstance().getReference().child("debt").child(mAuth.getCurrentUser().getUid());
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("debt").child(mAuth.getCurrentUser().getUid());
 
-        mDate.setText(String.format(myCalendar.get(Calendar.DATE) + "/" + (myCalendar.get(Calendar.MONTH) + 1) + "/" + (myCalendar.get(Calendar.YEAR)+1), "yy"));
-        mDueDate.setText(String.format(myCalendar_due.get(Calendar.DATE) + "/" + (myCalendar_due.get(Calendar.MONTH) + 1) + "/" + (myCalendar_due.get(Calendar.YEAR)+2), "yy"));
+        mDate.setText(String.format(myCalendar.get(Calendar.DATE) + "/" + (myCalendar.get(Calendar.MONTH) + 1) + "/" + (myCalendar.get(Calendar.YEAR)), "yy"));
+        mDueDate.setText(String.format(myCalendar_due.get(Calendar.DATE) + "/" + (myCalendar_due.get(Calendar.MONTH) + 1) + "/" + (myCalendar_due.get(Calendar.YEAR) + 1), "yy"));
 
-        mPayment=(Spinner) findViewById(R.id.custom_spinner_payment);
-        mRef=(EditText)findViewById(R.id.custom__ref);
-        mDesc=(EditText)findViewById(R.id.custom_desc);
+//        mPayment = (Spinner) findViewById(R.id.custom_spinner_payment);
+        mRef = (EditText) findViewById(R.id.custom__ref);
+        mDesc = (EditText) findViewById(R.id.custom_desc);
         mDate.setShowSoftInputOnFocus(false);
         mDueDate.setShowSoftInputOnFocus(false);
-        mAddBtn.setOnClickListener(new View.OnClickListener(){
+        mAddBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 String LendTo = mLendToName.getText().toString().trim();
                 String Amount = mAmount.getText().toString().trim();
-                Double DAmount = Double.parseDouble(Amount);
+
                 long Date = myCalendar.getTimeInMillis();
-                long DueDate =  myCalendar_due.getTimeInMillis();
+                long DueDate = myCalendar_due.getTimeInMillis();
                 String mPayment = mspinner.getSelectedItem().toString();
                 String Ref = mRef.getText().toString().trim();
                 String Desc = mDesc.getText().toString().trim();
@@ -139,22 +143,37 @@ public class LendToActivity extends AppCompatActivity {
                     errorText.requestFocus();
                     errorText.setError("FIELD CANNOT BE EMPTY");
                 } else {
-                    Toast.makeText(LendToActivity.this, "Validation Successful", Toast.LENGTH_LONG).show();
-                    com.expenx.expenx.model.LendTo lend = new LendTo(DAmount, LendTo, Date, DueDate, Desc, mPayment, Ref,"lend");
+                    Double DAmount = Double.parseDouble(Amount);
+                    com.expenx.expenx.model.LendTo lend = new LendTo(DAmount, LendTo, Date, DueDate, Desc, mPayment, Ref, "lend");
                     mDatabase.push().setValue(lend);
-                    Intent i = new Intent(getApplicationContext(),DebtActivity.class);
-                    startActivity(i);
+
+                    Toast.makeText(LendToActivity.this, "Validation Successful", Toast.LENGTH_LONG).show();
+
                     LendToActivity.this.finish();
                 }
-
-
 
             }
 
 
         });
+
+        mClear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LendToActivity.this.finish();
+            }
+        });
+
+        mEditAmount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CalculatorDialog calculatorDialog = new CalculatorDialog();
+                calculatorDialog.showDialog(LendToActivity.this, mAmount);
+            }
+        });
+
         //contact select
-             btnContacts.setOnClickListener(new View.OnClickListener() {
+        btnContacts.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
                 Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
@@ -163,9 +182,8 @@ public class LendToActivity extends AppCompatActivity {
         });
 
 
-
         //Calender for Date
-        final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+        date = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear,
                                   int dayOfMonth) {
@@ -179,18 +197,20 @@ public class LendToActivity extends AppCompatActivity {
 
         };
 
-
         mDate.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                new DatePickerDialog(LendToActivity.this, date, myCalendar
+                new DatePickerDialog(LendToActivity.this, android.R.style.Theme_DeviceDefault_Dialog, date, myCalendar
                         .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
                         myCalendar.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
-        final DatePickerDialog.OnDateSetListener date2 = new DatePickerDialog.OnDateSetListener() {
+
+
+        //Calender for DueDate
+        date2 = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear,
                                   int dayOfMonth) {
@@ -204,18 +224,18 @@ public class LendToActivity extends AppCompatActivity {
 
         };
 
-//Calender for DueDate
         mDueDate.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                new DatePickerDialog(LendToActivity.this, date2, myCalendar_due
+                new DatePickerDialog(LendToActivity.this, android.R.style.Theme_DeviceDefault_Dialog, date2, myCalendar_due
                         .get(Calendar.YEAR), myCalendar_due.get(Calendar.MONTH),
                         myCalendar_due.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
     }
+
     @Override
     public void onActivityResult(int reqCode, int resultCode, Intent data) {
         super.onActivityResult(reqCode, resultCode, data);
@@ -236,7 +256,6 @@ public class LendToActivity extends AppCompatActivity {
     }
 
 
-
     private void updateLabel() {
 
         String myFormat = "MM/dd/yy"; //In which you need put here
@@ -244,22 +263,32 @@ public class LendToActivity extends AppCompatActivity {
 
         mDate.setText(sdf.format(myCalendar.getTime()));
     }
+
     private void updateLabel2() {
 
         String myFormat = "MM/dd/yy"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
 
-        mDueDate.setText(sdf.format(myCalendar.getTime()));
+        mDueDate.setText(sdf.format(myCalendar_due.getTime()));
     }
+
     public void addItemsOnSpinner() {
 
         mspinner = (Spinner) findViewById(R.id.custom_spinner_payment);
         List<String> list = new ArrayList<String>();
         list.add("Cash");
-        list.add("Check");
+        list.add("Cheque");
+        list.add("Money Order Payment");
+        list.add("Credit Card Payment");
+        list.add("Debit Card Payment");
+        list.add("Online Payment");
+        list.add("Gift Card");
+        list.add("Voucher");
+        list.add("Bitcoin");
+        list.add("Other");
 
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
-        R.layout.spinner_items, R.id.textView, list);
+                R.layout.spinner_items, R.id.textView,list);
 
         mspinner.setAdapter(dataAdapter);
     }

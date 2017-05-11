@@ -47,7 +47,7 @@ public class NoteDisplayDialog {
 
         mTextViewNoteDialogTitle.setText("Title: "+noteDataModel.getTitle());
         mTextViewNoteDialogDescription.setText("Description: "+noteDataModel.getDescription());
-        mTextViewNoteDialogAmount.setText("Amount: "+noteDataModel.getAmount());
+        mTextViewNoteDialogAmount.setText(noteDataModel.getAmount());
         mImageViewNoteDialogImage.setImageResource(R.drawable.ic_broken_image);
 
 
