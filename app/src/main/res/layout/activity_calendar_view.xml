@@ -8,23 +8,24 @@
     tools:context="com.expenx.expenx.activity.CalendarViewActivity">
 
     <FrameLayout
+        android:layout_marginTop="@dimen/fab_margin"
         android:layout_width="match_parent"
         android:layout_height="300dp">
 
-        <CalendarView
+        <com.prolificinteractive.materialcalendarview.MaterialCalendarView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/calendarView"
-            android:layout_width="300dp"
-            android:layout_height="300dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="8dp"
-            android:background="@color/colorNavigationDrawerBackground"
-            android:focusedMonthDateColor="@color/colorText"
-            android:unfocusedMonthDateColor="@color/colorTextDark"
-            android:weekNumberColor="@android:color/white"
-            android:weekSeparatorLineColor="@android:color/white"
-            android:selectedWeekBackgroundColor="@color/colorNavigationDrawerBackground"
-            tools:layout_editor_absoluteX="33dp"
-            tools:layout_editor_absoluteY="16dp" />
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/calendar_background"
+            app:mcv_showOtherDates="all"
+            app:mcv_selectionColor="@color/colorSelectedDate"
+            app:mcv_dateTextAppearance="@style/CustomTextAppearance"
+            app:mcv_weekDayTextAppearance="@style/CustomOtherWeekTextAppearance"
+            app:mcv_headerTextAppearance="@style/CustomOtherHeaderTextAppearance"
+            app:mcv_arrowColor="@color/secondary_text"
+            />
 
     </FrameLayout>
 
@@ -33,6 +34,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/fab_margin"
+        android:background="@color/colorText"
         android:scrollbars="vertical" />
 
 </LinearLayout>

@@ -11,7 +11,9 @@ import android.widget.CalendarView;
 
 import com.expenx.expenx.R;
 import com.expenx.expenx.core.CalendarDataModel;
+import com.expenx.expenx.core.CurrentDateDecorator;
 import com.expenx.expenx.core.DataAdapterForCalendarRecycler;
+import com.expenx.expenx.core.EventDateDecorator;
 import com.expenx.expenx.core.MessageOutput;
 import com.expenx.expenx.model.BorrowFrom;
 import com.expenx.expenx.model.Expense;
@@ -24,6 +26,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.prolificinteractive.materialcalendarview.CalendarDay;
+import com.prolificinteractive.materialcalendarview.CalendarMode;
+import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
+import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
+import com.prolificinteractive.materialcalendarview.format.DateFormatDayFormatter;
+import com.prolificinteractive.materialcalendarview.format.DayFormatter;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -31,9 +39,12 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import static com.prolificinteractive.materialcalendarview.R.id.month;
+
 public class CalendarViewActivity extends AppCompatActivity {
 
     CalendarView calendar;
+    MaterialCalendarView materialCalendarView;
 
     private long timeStamp;
 
@@ -48,6 +59,9 @@ public class CalendarViewActivity extends AppCompatActivity {
 
     RecyclerView.Adapter adapter;
 
+    boolean incomeFinishedLoading = false;
+    boolean expenseFinishedLoading = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,16 +74,34 @@ public class CalendarViewActivity extends AppCompatActivity {
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
-        calendar = (CalendarView) findViewById(R.id.calendarView);
 
-        calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+        //adding material calendar view
+        materialCalendarView = (MaterialCalendarView) findViewById(R.id.calendarView);
+
+        materialCalendarView.state().edit()
+                .setFirstDayOfWeek(Calendar.MONDAY)
+                .setMinimumDate(CalendarDay.from(2016, 1, 1))
+                .setMaximumDate(CalendarDay.from(2026, 1, 1))
+                .setCalendarDisplayMode(CalendarMode.MONTHS)
+                .commit();
+
+        materialCalendarView.addDecorator(new CurrentDateDecorator(this));
+
+
+        //highlighting event dates on the calendar
+        //this only runs only on create
+        loadExpense();
+        loadIncome();
+
+
+        materialCalendarView.setOnDateChangedListener(new OnDateSelectedListener() {
             @Override
-            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
+            public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
                 dataSet.clear();
-                String date = dayOfMonth + "/" + (month + 1) + "/" + year;
-                convertDate(date);
+                String newDate = date.getDay() + "/" + (date.getMonth() + 1) + "/" + date.getYear();
+                convertDate(newDate);
 //                loadLendTo(date);
-                loadDebt(date);
+//                loadDebt(date);
                 loadExpense();
                 loadIncome();
                 initViews();
@@ -111,16 +143,29 @@ public class CalendarViewActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
+                long dataSnapshopCount = dataSnapshot.getChildrenCount();
+                long i = 0;
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Expense expense = snapshot.getValue(Expense.class);
 
-                    //System.out.println("_________________returnConvertDate(expense.timestamp)==timeStamp) " + returnConvertDate(expense.timestamp) + "==" + timeStamp);
+                    if (!expenseFinishedLoading) { //highlighting event dates on calendar
+                        Calendar expenseTimestamp = Calendar.getInstance();
+                        expenseTimestamp.setTimeInMillis(expense.timestamp);
+
+                        Calendar calendar = Calendar.getInstance();
+                        calendar.set(expenseTimestamp.get(Calendar.YEAR), expenseTimestamp.get(Calendar.MONTH), expenseTimestamp.get(Calendar.DAY_OF_MONTH));
+                        materialCalendarView.addDecorator(new EventDateDecorator(CalendarViewActivity.this, CalendarDay.from(calendar)));
+
+                        if (dataSnapshopCount == i)
+                            expenseFinishedLoading = true;
+
+                        i++;
+                    }
 
                     if (returnConvertDate(expense.timestamp) == timeStamp) {
-                        System.out.println("_________________Expense amount " + expense.amount);
-                        String type = expense.category + " Expense";;
+                        String type = expense.category + " Expense";
                         String info = "Amout : " + expense.amount;
-                        CalendarDataModel dm = new CalendarDataModel(type, info);
+                        CalendarDataModel dm = new CalendarDataModel(type, info, expense.description);
                         dataSet.add(dm);
                         initViews();
                     }
@@ -141,16 +186,29 @@ public class CalendarViewActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
+                long dataSnapshopCount = dataSnapshot.getChildrenCount();
+                long i = 0;
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Income income = snapshot.getValue(Income.class);
 
-                    //System.out.println("_________________before " + income.timestamp + " now returnConvertDate(income.timestamp)==timeStamp)" + returnConvertDate(income.timestamp) + "==" + timeStamp);
+                    if (!incomeFinishedLoading) {//highlighting event dates on calendar
+                        Calendar incomeTimestamp = Calendar.getInstance();
+                        incomeTimestamp.setTimeInMillis(income.timestamp);
+
+                        Calendar calendar = Calendar.getInstance();
+                        calendar.set(incomeTimestamp.get(Calendar.YEAR), incomeTimestamp.get(Calendar.MONTH), incomeTimestamp.get(Calendar.DAY_OF_MONTH));
+                        materialCalendarView.addDecorator(new EventDateDecorator(CalendarViewActivity.this, CalendarDay.from(calendar)));
+
+                        if (dataSnapshopCount == i)
+                            incomeFinishedLoading = true;
+
+                        i++;
+                    }
 
                     if (returnConvertDate(income.timestamp) == timeStamp) {
-                        System.out.println("_______________income amount " + income.amount);
                         String type = income.category + " Income";
                         String info = "Amout : " + income.amount;
-                        CalendarDataModel dm = new CalendarDataModel(type, info);
+                        CalendarDataModel dm = new CalendarDataModel(type, info, income.description);
                         dataSet.add(dm);
                         initViews();
                     }
@@ -176,7 +234,7 @@ public class CalendarViewActivity extends AppCompatActivity {
 
                     String type = "Debt";
                     String info = "Amout : " + borrowFrom.amount;
-                    CalendarDataModel dm = new CalendarDataModel(type, info);
+                    CalendarDataModel dm = new CalendarDataModel(type, info, borrowFrom.description);
                     dataSet.add(dm);
                     initViews();
                 }

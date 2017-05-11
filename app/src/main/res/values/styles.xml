@@ -45,4 +45,17 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <!--material calendar view-->
+    <style name="CustomTextAppearance" parent="TextAppearance.MaterialCalendarWidget.Date">
+        <item name="android:textColor">@drawable/calendar_text_color</item>
+    </style>
+
+    <style name="CustomOtherWeekTextAppearance" parent="TextAppearance.MaterialCalendarWidget.WeekDay">
+        <item name="android:textColor">@color/secondary_text</item>
+    </style>
+
+    <style name="CustomOtherHeaderTextAppearance" parent="TextAppearance.MaterialCalendarWidget.Header">
+        <item name="android:textColor">@color/colorText</item>
+    </style>
+
 </resources>

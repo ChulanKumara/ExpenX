@@ -19,9 +19,10 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal" >
 
-            <ImageButton
+            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="2dp"
                 android:src="@drawable/circle_grey"/>
 
             <LinearLayout

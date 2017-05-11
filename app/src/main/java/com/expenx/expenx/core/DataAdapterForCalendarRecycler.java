@@ -23,7 +23,7 @@ public class DataAdapterForCalendarRecycler extends RecyclerView.Adapter<DataAda
 
     @Override
     public DataAdapterForCalendarRecycler.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.card_layout, viewGroup, false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.card_layout_calendar, viewGroup, false);
         return new ViewHolder(view);
     }
 
@@ -32,6 +32,7 @@ public class DataAdapterForCalendarRecycler extends RecyclerView.Adapter<DataAda
 
         viewHolder.rType.setText(dataSet.get(i).getTransactionType());
         viewHolder.rInfo.setText(dataSet.get(i).getTransactionInfo());
+        viewHolder.rDesc.setText(dataSet.get(i).getTransactionDesc());
     }
 
     @Override
@@ -42,11 +43,13 @@ public class DataAdapterForCalendarRecycler extends RecyclerView.Adapter<DataAda
     public class ViewHolder extends RecyclerView.ViewHolder{
         private TextView rType;
         private TextView rInfo;
+        private TextView rDesc;
         public ViewHolder(View view) {
             super(view);
 
             rType = (TextView)view.findViewById(R.id.textType);
             rInfo = (TextView)view.findViewById(R.id.textInformation);
+            rDesc = (TextView)view.findViewById(R.id.textDescription);
         }
     }
 

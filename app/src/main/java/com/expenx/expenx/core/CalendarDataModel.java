@@ -8,10 +8,12 @@ public class CalendarDataModel {
 
     private String TransactionType;
     private String TransactionInfo;
+    private String TransactionDesc;
 
-    public CalendarDataModel(String TransactionType, String TransactionInfo) {
-        this.TransactionType = TransactionType;
-        this.TransactionInfo = TransactionInfo;
+    public CalendarDataModel(String transactionType, String transactionInfo, String transactionDesc) {
+        TransactionType = transactionType;
+        TransactionInfo = transactionInfo;
+        TransactionDesc = transactionDesc;
     }
 
     public String getTransactionType() {
@@ -22,4 +24,5 @@ public class CalendarDataModel {
         return TransactionInfo;
     }
 
+    public String getTransactionDesc() { return TransactionDesc; }
 }
