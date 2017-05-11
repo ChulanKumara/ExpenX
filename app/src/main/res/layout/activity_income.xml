@@ -45,8 +45,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/linearLayoutIncomeAmountEdit"
-        android:backgroundTint="@color/colorText"
-        android:entries="@array/income_expense_category" />
+        android:backgroundTint="@color/colorText" />
 
     <EditText
         android:id="@+id/editTextIncomeDescription"

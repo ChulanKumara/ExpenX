@@ -18,7 +18,6 @@ import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -29,6 +28,7 @@ import android.widget.Toast;
 
 import com.expenx.expenx.R;
 import com.expenx.expenx.core.CalculatorDialog;
+import com.expenx.expenx.core.SpinnerPaymentMethodInitializer;
 import com.expenx.expenx.model.LendTo;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -36,9 +36,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 import java.util.Locale;
 
 
@@ -61,7 +59,7 @@ public class LendToActivity extends AppCompatActivity {
     Spinner mPayment;
     Calendar myCalendar = Calendar.getInstance();
     Calendar myCalendar_due = Calendar.getInstance();
-    Spinner mspinner;
+    Spinner mSpinner;
 
     SharedPreferences preferences = null;
     SharedPreferences.Editor editor = null;
@@ -109,7 +107,7 @@ public class LendToActivity extends AppCompatActivity {
         mAmount = (EditText) findViewById(R.id.custom_amount);
         mDate = (EditText) findViewById(R.id.custom_date_lend);
         mDueDate = (EditText) findViewById(R.id.custom_due_date_lend);
-        mspinner = (Spinner) findViewById(R.id.custom_spinner_payment);
+        mSpinner = (Spinner) findViewById(R.id.custom_spinner_payment);
 
         mDatabase = FirebaseDatabase.getInstance().getReference().child("debt").child(mAuth.getCurrentUser().getUid());
 
@@ -130,7 +128,7 @@ public class LendToActivity extends AppCompatActivity {
 
                 long Date = myCalendar.getTimeInMillis();
                 long DueDate = myCalendar_due.getTimeInMillis();
-                String mPayment = mspinner.getSelectedItem().toString();
+                String mPayment = mSpinner.getSelectedItem().toString();
                 String Ref = mRef.getText().toString().trim();
                 String Desc = mDesc.getText().toString().trim();
 
@@ -274,22 +272,8 @@ public class LendToActivity extends AppCompatActivity {
 
     public void addItemsOnSpinner() {
 
-        mspinner = (Spinner) findViewById(R.id.custom_spinner_payment);
-        List<String> list = new ArrayList<String>();
-        list.add("Cash");
-        list.add("Cheque");
-        list.add("Money Order Payment");
-        list.add("Credit Card Payment");
-        list.add("Debit Card Payment");
-        list.add("Online Payment");
-        list.add("Gift Card");
-        list.add("Voucher");
-        list.add("Bitcoin");
-        list.add("Other");
+        mSpinner = (Spinner) findViewById(R.id.custom_spinner_payment);
 
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
-                R.layout.spinner_items, R.id.textView,list);
-
-        mspinner.setAdapter(dataAdapter);
+        mSpinner.setAdapter(SpinnerPaymentMethodInitializer.initialize(LendToActivity.this));
     }
 }

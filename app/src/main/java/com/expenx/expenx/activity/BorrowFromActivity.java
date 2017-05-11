@@ -25,6 +25,7 @@ import android.widget.Toast;
 
 import com.expenx.expenx.R;
 import com.expenx.expenx.core.CalculatorDialog;
+import com.expenx.expenx.core.SpinnerPaymentMethodInitializer;
 import com.expenx.expenx.model.BorrowFrom;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -272,20 +273,8 @@ public class BorrowFromActivity extends AppCompatActivity {
     public void addItemsOnSpinner() {
 
         mSpinner = (Spinner) findViewById(R.id.custom_spinner_payment);
-        List<String> list = new ArrayList<String>();
-        list.add("Cash");
-        list.add("Cheque");
-        list.add("Money Order Payment");
-        list.add("Credit Card Payment");
-        list.add("Debit Card Payment");
-        list.add("Online Payment");
-        list.add("Gift Card");
-        list.add("Voucher");
-        list.add("Bitcoin");
-        list.add("Other");
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
-                R.layout.spinner_items, R.id.textView, list);
-        mSpinner.setAdapter(dataAdapter);
+
+        mSpinner.setAdapter(SpinnerPaymentMethodInitializer.initialize(BorrowFromActivity.this));
     }
 
 }

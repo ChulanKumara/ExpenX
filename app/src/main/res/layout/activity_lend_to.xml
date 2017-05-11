@@ -71,11 +71,15 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Lend Date"
-        android:inputType="none"
+        android:inputType="date"
+        android:focusable="false"
+        android:longClickable="false"
         android:textColor="@color/colorText"
         android:textColorHint="@color/colorText"
         android:layout_below="@+id/linearLayoutLendToAmoutEdit"
-        android:backgroundTint="@color/colorText"/>
+        android:backgroundTint="@color/colorText"
+        android:drawableEnd="@drawable/ic_date_select"
+        android:drawableRight="@drawable/ic_date_select"/>
 
     <EditText
         android:id="@+id/custom_due_date_lend"
@@ -83,11 +87,15 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Due Date"
-        android:inputType="none"
+        android:inputType="date"
+        android:focusable="false"
+        android:longClickable="false"
         android:textColor="@color/colorText"
         android:textColorHint="@color/colorText"
         android:layout_below="@+id/custom_date_lend"
-        android:backgroundTint="@color/colorText"/>
+        android:backgroundTint="@color/colorText"
+        android:drawableEnd="@drawable/ic_date_select"
+        android:drawableRight="@drawable/ic_date_select"/>
 
     <Spinner
         android:id="@+id/custom_spinner_payment"

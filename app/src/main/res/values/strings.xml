@@ -69,14 +69,6 @@
     <string name="dot">.</string>
     <string name="equal">=</string>
 
-    <!--income/expense category spinner-->
-    <string-array name="income_expense_category">
-        <item>Category</item>
-        <item>Travel</item>
-        <item>Food</item>
-        <item>Medical</item>
-        <item>Other</item>
-    </string-array>
 
     <!--Debt Activity-->
 

@@ -43,8 +43,7 @@
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_below="@+id/linearLayoutExpenseAmountEdit"
-        android:backgroundTint="@color/colorText"
-        android:entries="@array/income_expense_category" />
+        android:backgroundTint="@color/colorText"/>
 
     <EditText
         android:id="@+id/editTextExpenseDescription"
