@@ -112,6 +112,11 @@
             android:label="Borrow From"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppThemeSecondary" />
+        <activity
+            android:name=".activity.ForgotPasswordActivity"
+            android:label="Forgot Password"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppThemeSecondary" />
     </application>
 
 </manifest>

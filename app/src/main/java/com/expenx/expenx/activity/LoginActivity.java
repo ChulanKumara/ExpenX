@@ -278,6 +278,13 @@ public class LoginActivity extends AppCompatActivity implements
                 startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
             }
         });
+
+        mForgotPasswordText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this,ForgotPasswordActivity.class));
+            }
+        });
     }
 
     // [START onactivityresult]

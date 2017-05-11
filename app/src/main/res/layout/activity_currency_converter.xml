@@ -85,9 +85,19 @@
         android:id="@+id/convertCurrencyButton"
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:layout_alignParentBottom="true"
+        android:layout_above="@+id/textViewPoweredBy"
         android:background="@drawable/button_normal"
         android:textColor="@color/colorText"
         android:text="CONVERT" />
+
+    <TextView
+        android:id="@+id/textViewPoweredBy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorText"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="2dp"
+        android:textSize="10sp"
+        android:text="Real time currency API powered by 'The Free Currency Converter API' - free.currencyconverterapi.com"/>
 
 </RelativeLayout>
