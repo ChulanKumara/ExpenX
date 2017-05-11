@@ -141,6 +141,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="CANCEL"
+            android:textColor="@color/colorText"
             android:background="@color/colorButtonBackground"
             android:layout_marginRight="5dp"
             android:layout_weight="1"/>
@@ -149,6 +150,7 @@
             android:id="@+id/button_borrow_add"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/colorText"
             android:background="@color/colorButtonBackground"
             android:layout_marginLeft="5dp"
             android:text="Add"

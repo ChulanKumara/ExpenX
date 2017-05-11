@@ -11,6 +11,7 @@
     <color name="colorButtonExpenseBackground">#a92f31</color>
     <color name="colorButtonDebtBackground">#7730a7</color>
     <color name="colorText">#bfe7e7e7</color>
+    <color name="colorTextSecondary">#a1a1a1</color>
     <color name="colorTextDark">#2b2b2b</color>
     <color name="colorTextMoreTransparent">#38e7e7e7</color>
     <color name="colorCircle">#e7e7e7</color>
