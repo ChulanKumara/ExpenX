@@ -86,13 +86,13 @@ public class RegisterActivity extends AppCompatActivity {
         mSelectImage = (ImageButton) findViewById(R.id.buttonLoadPicture);
         mRegisterButton = (Button) findViewById(R.id.btnRegister);
 
-        mSelectImage.setOnClickListener(new View.OnClickListener(){
+        mSelectImage.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view){
+            public void onClick(View view) {
 
                 Intent intent = new Intent(Intent.ACTION_PICK);
                 intent.setType("image/*");
-                startActivityForResult(intent,GALLERY_INTENT);
+                startActivityForResult(intent, GALLERY_INTENT);
             }
         });
 
@@ -110,9 +110,9 @@ public class RegisterActivity extends AppCompatActivity {
     private void registerUser() {
 
         //Check if the user have an active internet connection
-        ConnectivityManager conMgr =  (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager conMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = conMgr.getActiveNetworkInfo();
-        if (netInfo == null){
+        if (netInfo == null) {
             Toast.makeText(this, "Check your internet connection", Toast.LENGTH_LONG).show();
             return;
         }
@@ -143,28 +143,26 @@ public class RegisterActivity extends AppCompatActivity {
                         imageUrl = "users/" + userId + "/profileimage/" + image;
 
                         DatabaseReference currentUserDb = mDatabase.child(userId);
-                        Reminder defaultReminder = new Reminder("weekly",true,14938269444L);
-                        User user = new User(firstName,lastName,imageUrl,"USD",defaultReminder);
+                        Reminder defaultReminder = new Reminder("weekly", true, 14938269444L);
+                        User user = new User(firstName, lastName, imageUrl, "USD", defaultReminder);
                         currentUserDb.setValue(user);
 
 
                         MessageOutput.dismissProgressDialog();
                         Toast.makeText(RegisterActivity.this, "Successful.. Please Login", Toast.LENGTH_LONG).show();
                         Intent loginIntent = new Intent(RegisterActivity.this, LoginActivity.class);
-                        loginIntent.putExtra("dontListenToAuthListener",1);
+                        loginIntent.putExtra("dontListenToAuthListener", true);
                         startActivity(loginIntent);
                         RegisterActivity.this.finish();
 
-
-
-                    }else{
+                    } else {
                         MessageOutput.dismissProgressDialog();
                         Toast.makeText(RegisterActivity.this, error, Toast.LENGTH_LONG).show();
                     }
                 }
             });
 
-        }catch(Exception ex){
+        } catch (Exception ex) {
             MessageOutput.dismissProgressDialog();
             Toast.makeText(RegisterActivity.this, "", Toast.LENGTH_LONG).show();
         }
@@ -185,7 +183,7 @@ public class RegisterActivity extends AppCompatActivity {
                 selectedImage = data.getData();
                 mSelectImage.setBackgroundResource(R.drawable.button_image_selected);
                 String path = getRealPathFromURI(selectedImage);
-                image = path.substring(path.lastIndexOf("/")+1);
+                image = path.substring(path.lastIndexOf("/") + 1);
             }
 
         } catch (Exception e) {
@@ -197,7 +195,7 @@ public class RegisterActivity extends AppCompatActivity {
     //-----------------------------------------------------------------
 
     public String getRealPathFromURI(Uri uri) {
-        String[] projection = { MediaStore.Images.Media.DATA };
+        String[] projection = {MediaStore.Images.Media.DATA};
         @SuppressWarnings("deprecation")
         Cursor cursor = managedQuery(uri, projection, null, null, null);
         int column_index = cursor
@@ -208,7 +206,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     // ------------- Upload image to firebase storage -------------
 
-    private void uploadImage(String UserId){
+    private void uploadImage(String UserId) {
 
         try {
             final Uri _uri = selectedImage;
@@ -221,7 +219,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                 }
             });
-        }catch(Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
             Toast.makeText(this, "Something went wrong while uploading the image", Toast.LENGTH_LONG).show();
         }
@@ -233,8 +231,8 @@ public class RegisterActivity extends AppCompatActivity {
 
         boolean valid = true;
 
-        String firstName =  mFirstName.getText().toString();
-        String lastName =  mLastName.getText().toString();
+        String firstName = mFirstName.getText().toString();
+        String lastName = mLastName.getText().toString();
         String email = mEmail.getText().toString();
         String password = mPassword.getText().toString();
 
@@ -258,15 +256,15 @@ public class RegisterActivity extends AppCompatActivity {
             Toast.makeText(this, "Email required", Toast.LENGTH_LONG).show();
             valid = false;
             return false;
-        }else if(!isValidEmailAddress(email)){
+        } else if (!isValidEmailAddress(email)) {
             Toast.makeText(this, "Invalid email", Toast.LENGTH_LONG).show();
             valid = false;
             return false;
-        } else if(checkUserExits(email)){
+        } else if (checkUserExits(email)) {
             Toast.makeText(this, "User already exists", Toast.LENGTH_LONG).show();
             valid = false;
             return false;
-        }else{
+        } else {
             mEmail.setError(null);
         }
 
@@ -274,14 +272,14 @@ public class RegisterActivity extends AppCompatActivity {
             Toast.makeText(this, "Password required", Toast.LENGTH_LONG).show();
             valid = false;
             return false;
-        } else if(!checkPasswordStrength(password)) {
+        } else if (!checkPasswordStrength(password)) {
             valid = false;
             return false;
-        }else{
+        } else {
             mPassword.setError(null);
         }
 
-        if(selectedImage == null){
+        if (selectedImage == null) {
             Toast.makeText(this, "Image required", Toast.LENGTH_LONG).show();
             valid = false;
             return false;
@@ -292,7 +290,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     //------------------------------------------------------------
 
-    private boolean checkUserExits(String email){
+    private boolean checkUserExits(String email) {
 
         final boolean[] b = new boolean[1];
         b[0] = false;
@@ -300,7 +298,7 @@ public class RegisterActivity extends AppCompatActivity {
         mAuth.fetchProvidersForEmail(email).addOnCompleteListener(new OnCompleteListener<ProviderQueryResult>() {
             @Override
             public void onComplete(@NonNull Task<ProviderQueryResult> task) {
-                if(!task.getResult().getProviders().isEmpty()){
+                if (!task.getResult().getProviders().isEmpty()) {
                     b[0] = true;
                 }
             }
@@ -310,17 +308,17 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
-    private boolean checkPasswordStrength(String password){
+    private boolean checkPasswordStrength(String password) {
 
         boolean valid = true;
 
         Pattern pattern = Pattern.compile("[a-zA-Z0-9]*");
         Matcher matcher = pattern.matcher(password);
 
-        if(password.length() < 6){
+        if (password.length() < 6) {
             Toast.makeText(this, "Password should be more than 6 characters", Toast.LENGTH_LONG).show();
             valid = false;
-        }else if (matcher.matches()) {
+        } else if (matcher.matches()) {
             Toast.makeText(this, "Password should have atleast one speacial character", Toast.LENGTH_LONG).show();
             valid = false;
         }
@@ -329,7 +327,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     public static boolean isValidEmailAddress(String email) {
         final Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
-        Matcher matcher = VALID_EMAIL_ADDRESS_REGEX .matcher(email);
+        Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(email);
         return matcher.find();
     }
 

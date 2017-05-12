@@ -49,6 +49,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class LoginActivity extends AppCompatActivity implements
         GoogleApiClient.OnConnectionFailedListener {
@@ -70,7 +72,7 @@ public class LoginActivity extends AppCompatActivity implements
     SharedPreferences preferences = null;
     SharedPreferences.Editor editor = null;
 
-    int dontListenToAuthListener;
+    boolean dontListenToAuthListener = false;
 
     private static final String TAG = "GoogleActivity";
     private static final int RC_SIGN_IN = 9001;
@@ -95,10 +97,11 @@ public class LoginActivity extends AppCompatActivity implements
 
         mDatabase = FirebaseDatabase.getInstance().getReference().child("user");
 
-        dontListenToAuthListener = -1;
+
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            dontListenToAuthListener = extras.getInt("dontListenToAuthListener");
+            dontListenToAuthListener = extras.getBoolean("dontListenToAuthListener");
+            extras.putBoolean("dontListenToAuthListener", false);
         }
 
 
@@ -125,7 +128,7 @@ public class LoginActivity extends AppCompatActivity implements
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user != null && dontListenToAuthListener == -1) {
+                if (user != null && !dontListenToAuthListener) {
                     // User is signed in
 
                     editor = preferences.edit();
@@ -282,7 +285,7 @@ public class LoginActivity extends AppCompatActivity implements
         mForgotPasswordText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this,ForgotPasswordActivity.class));
+                startActivity(new Intent(LoginActivity.this, ForgotPasswordActivity.class));
             }
         });
     }
@@ -326,11 +329,11 @@ public class LoginActivity extends AppCompatActivity implements
 
                             DatabaseReference currentUserDb = mDatabase.child(user.getUid());
 
-                            currentUserDb.orderByKey().equalTo(user.getUid()).addValueEventListener(new ValueEventListener(){
+                            currentUserDb.orderByKey().equalTo(user.getUid()).addValueEventListener(new ValueEventListener() {
 
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
-                                    if(!dataSnapshot.exists()) {
+                                    if (!dataSnapshot.exists()) {
                                         //First time registering a user from google
                                         FirebaseUser user = mAuth.getCurrentUser();
                                         DatabaseReference currentUserDb = mDatabase.child(user.getUid());
@@ -365,8 +368,8 @@ public class LoginActivity extends AppCompatActivity implements
                             editor.putString("email", mAuth.getCurrentUser().getEmail());
                             editor.apply();
 
-                            LoginActivity.this.finish();
                             startActivity(new Intent(LoginActivity.this, ExpenxActivity.class));
+                            LoginActivity.this.finish();
                             isExpenxActivityLaunched = true;
 
                         } else {
@@ -402,6 +405,9 @@ public class LoginActivity extends AppCompatActivity implements
         String email = mEmailText.getText().toString();
         if (TextUtils.isEmpty(email)) {
             MessageOutput.showSnackbarLongDuration(LoginActivity.this, "Email required..!");
+            valid = false;
+        } else if (!isValidEmailAddress(email)) {
+            MessageOutput.showSnackbarLongDuration(LoginActivity.this, "Invalid Email..!");
             valid = false;
         } else {
             mEmailText.setError(null);
@@ -463,9 +469,12 @@ public class LoginActivity extends AppCompatActivity implements
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-        // An unresolvable error has occurred and Google APIs (including Sign-In) will not
-        // be available.
-        Log.d(TAG, "onConnectionFailed:" + connectionResult);
         Toast.makeText(this, "Google Play Services error.", Toast.LENGTH_SHORT).show();
+    }
+
+    public static boolean isValidEmailAddress(String email) {
+        final Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
+        Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(email);
+        return matcher.find();
     }
 }

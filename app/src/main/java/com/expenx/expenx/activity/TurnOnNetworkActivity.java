@@ -22,7 +22,7 @@ public class TurnOnNetworkActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(TurnOnNetworkActivity.this, ExpenxActivity.class));
-                LoginActivity.isExpenxActivityLaunched = true;
+//                LoginActivity.isExpenxActivityLaunched = true;
                 TurnOnNetworkActivity.this.finish();
             }
         });

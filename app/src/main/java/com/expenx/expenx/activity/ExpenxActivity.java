@@ -76,275 +76,273 @@ public class ExpenxActivity extends AppCompatActivity
         ConnectivityManager conMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = conMgr.getActiveNetworkInfo();
         if (netInfo == null) {
-            startActivity(new Intent(this, TurnOnNetworkActivity.class));
             LoginActivity.isExpenxActivityLaunched = false;
+            startActivity(new Intent(this, TurnOnNetworkActivity.class));
             this.finish();
             return;
         }
 
-        Button mButtonChartView = (Button) findViewById(R.id.buttonChartView);
-        mButtonChartView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(ExpenxActivity.this, ChartViewActivity.class));
-            }
-        });
+            Button mButtonChartView = (Button) findViewById(R.id.buttonChartView);
+            mButtonChartView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(ExpenxActivity.this, ChartViewActivity.class));
+                }
+            });
 
-        Button mButtonCalendarView = (Button) findViewById(R.id.buttonCalendarView);
-        mButtonCalendarView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(ExpenxActivity.this, CalendarViewActivity.class));
-            }
-        });
+            Button mButtonCalendarView = (Button) findViewById(R.id.buttonCalendarView);
+            mButtonCalendarView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(ExpenxActivity.this, CalendarViewActivity.class));
+                }
+            });
 
-        Button mButtonIncome = (Button) findViewById(R.id.buttonIncome);
-        mButtonIncome.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(ExpenxActivity.this, IncomeActivity.class));
-            }
-        });
+            Button mButtonIncome = (Button) findViewById(R.id.buttonIncome);
+            mButtonIncome.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(ExpenxActivity.this, IncomeActivity.class));
+                }
+            });
 
-        Button mButtonExpense = (Button) findViewById(R.id.buttonExpense);
-        mButtonExpense.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(ExpenxActivity.this, ExpenseActivity.class));
-            }
-        });
+            Button mButtonExpense = (Button) findViewById(R.id.buttonExpense);
+            mButtonExpense.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(ExpenxActivity.this, ExpenseActivity.class));
+                }
+            });
 
-        Button mButtonDebt = (Button) findViewById(R.id.buttonDebt);
-        mButtonDebt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(ExpenxActivity.this, DebtActivity.class));
-            }
-        });
-
-
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+            Button mButtonDebt = (Button) findViewById(R.id.buttonDebt);
+            mButtonDebt.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(ExpenxActivity.this, DebtActivity.class));
+                }
+            });
 
 
-        databaseReference = FirebaseDatabase.getInstance().getReference();
+            sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                    this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+            drawer.setDrawerListener(toggle);
+            toggle.syncState();
+
+            NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+            navigationView.setNavigationItemSelectedListener(this);
 
 
-        databaseReference.child("user").child(sharedPreferences.getString("uid", null)).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            databaseReference = FirebaseDatabase.getInstance().getReference();
 
-                FirebaseStorage storage = FirebaseStorage.getInstance();
-                StorageReference storageRef = storage.getReference();
 
-                user = dataSnapshot.getValue(User.class);
-                user.userUID = dataSnapshot.getKey();
+            databaseReference.child("user").child(sharedPreferences.getString("uid", null)).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
 
-                ((TextView) findViewById(R.id.nav_textViewUserName)).setText(user.fname + " " + user.lname);
-                ((TextView) findViewById(R.id.nav_textViewUserEmail)).setText(sharedPreferences.getString("email", null));
+                    FirebaseStorage storage = FirebaseStorage.getInstance();
+                    StorageReference storageRef = storage.getReference();
 
-                if (user.profileImage != null && user.profileImage.substring(0,user.profileImage.indexOf('/')).equalsIgnoreCase("users")) {
-                    storageRef.child(user.profileImage).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                        @Override
-                        public void onSuccess(Uri uri) {
+                    user = dataSnapshot.getValue(User.class);
+                    user.userUID = dataSnapshot.getKey();
+
+                    ((TextView) findViewById(R.id.nav_textViewUserName)).setText(user.fname + " " + user.lname);
+                    ((TextView) findViewById(R.id.nav_textViewUserEmail)).setText(sharedPreferences.getString("email", null));
+
+                    if (user.profileImage != null && user.profileImage.substring(0, user.profileImage.indexOf('/')).equalsIgnoreCase("users")) {
+                        storageRef.child(user.profileImage).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                ImageView profilePic = (ImageView) findViewById(R.id.profile_image);
+                                Picasso.with(ExpenxActivity.this).load(uri).into(profilePic);
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception exception) {
+                                exception.printStackTrace();
+                                MessageOutput.showSnackbarLongDuration(ExpenxActivity.this, "Something went wrong while loading your profile image...!");
+                            }
+                        });
+                    } else {
+                        try {
                             ImageView profilePic = (ImageView) findViewById(R.id.profile_image);
-                            Picasso.with(ExpenxActivity.this).load(uri).into(profilePic);
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception exception) {
-                            exception.printStackTrace();
+                            Picasso.with(ExpenxActivity.this).load(user.profileImage).into(profilePic);
+                        } catch (Exception e) {
+                            e.printStackTrace();
                             MessageOutput.showSnackbarLongDuration(ExpenxActivity.this, "Something went wrong while loading your profile image...!");
                         }
-                    });
-                }else{
-                    try{
-                        ImageView profilePic = (ImageView) findViewById(R.id.profile_image);
-                        Picasso.with(ExpenxActivity.this).load(user.profileImage).into(profilePic);
-                    }catch (Exception e){
-                        e.printStackTrace();
-                        MessageOutput.showSnackbarLongDuration(ExpenxActivity.this, "Something went wrong while loading your profile image...!");
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                MessageOutput.showSnackbarLongDuration(ExpenxActivity.this, databaseError.getMessage());
-            }
-        });
-
-
-
-
-        databaseReference.child("income").child(sharedPreferences.getString("uid", null)).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                double todayIncome = 0;
-                double thisWeekIncome = 0;
-                double thisMonthIncome = 0;
-
-                Calendar incomeTimestamp = Calendar.getInstance();
-
-                Calendar nowTimestamp = Calendar.getInstance();
-                nowTimestamp.setTimeInMillis(Calendar.getInstance().getTimeInMillis());
-
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    Income income = snapshot.getValue(Income.class);
-
-                    incomeTimestamp.setTimeInMillis(income.timestamp);
-
-                    if (incomeTimestamp.get(Calendar.DATE) == nowTimestamp.get(Calendar.DATE) && incomeTimestamp.get(Calendar.MONTH) == nowTimestamp.get(Calendar.MONTH) && incomeTimestamp.get(Calendar.YEAR) == nowTimestamp.get(Calendar.YEAR)) {
-                        todayIncome += income.amount;
-                    }
-
-                    if (incomeTimestamp.get(Calendar.WEEK_OF_YEAR) == nowTimestamp.get(Calendar.WEEK_OF_YEAR) && incomeTimestamp.get(Calendar.YEAR) == nowTimestamp.get(Calendar.YEAR)) {
-                        thisWeekIncome += income.amount;
-                    }
-
-                    if (incomeTimestamp.get(Calendar.MONTH) == nowTimestamp.get(Calendar.MONTH) && incomeTimestamp.get(Calendar.YEAR) == nowTimestamp.get(Calendar.YEAR)) {
-                        thisMonthIncome += income.amount;
                     }
                 }
 
-                ((TextView) findViewById(R.id.textViewTodayIncomeAmount)).setText(new DecimalFormat("#.00").format(todayIncome));
-                ((TextView) findViewById(R.id.textViewThisWeekIncomeAmount)).setText(new DecimalFormat("#.00").format(thisWeekIncome));
-                ((TextView) findViewById(R.id.textViewThisMonthIncomeAmount)).setText(new DecimalFormat("#.00").format(thisMonthIncome));
-
-                if (todayIncome == 0)
-                    ((TextView) findViewById(R.id.textViewTodayIncomeAmount)).setText("0.00");
-                if (thisWeekIncome == 0)
-                    ((TextView) findViewById(R.id.textViewThisWeekIncomeAmount)).setText("0.00");
-                if (thisMonthIncome == 0)
-                    ((TextView) findViewById(R.id.textViewThisMonthIncomeAmount)).setText("0.00");
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-        databaseReference.child("expense").child(sharedPreferences.getString("uid", null)).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    MessageOutput.showSnackbarLongDuration(ExpenxActivity.this, databaseError.getMessage());
+                }
+            });
 
 
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            databaseReference.child("income").child(sharedPreferences.getString("uid", null)).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
 
-                double todayExpense = 0;
-                double thisWeekExpense = 0;
-                double thisMonthExpense = 0;
+                    double todayIncome = 0;
+                    double thisWeekIncome = 0;
+                    double thisMonthIncome = 0;
 
-                Calendar incomeTimestamp = Calendar.getInstance();
+                    Calendar incomeTimestamp = Calendar.getInstance();
 
-                Calendar nowTimestamp = Calendar.getInstance();
-                nowTimestamp.setTimeInMillis(Calendar.getInstance().getTimeInMillis());
+                    Calendar nowTimestamp = Calendar.getInstance();
+                    nowTimestamp.setTimeInMillis(Calendar.getInstance().getTimeInMillis());
 
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    Expense expense = snapshot.getValue(Expense.class);
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        Income income = snapshot.getValue(Income.class);
 
-                    incomeTimestamp.setTimeInMillis(expense.timestamp);
+                        incomeTimestamp.setTimeInMillis(income.timestamp);
 
-                    if (incomeTimestamp.get(Calendar.DATE) == nowTimestamp.get(Calendar.DATE) && incomeTimestamp.get(Calendar.MONTH) == nowTimestamp.get(Calendar.MONTH) && incomeTimestamp.get(Calendar.YEAR) == nowTimestamp.get(Calendar.YEAR)) {
-                        todayExpense += expense.amount;
+                        if (incomeTimestamp.get(Calendar.DATE) == nowTimestamp.get(Calendar.DATE) && incomeTimestamp.get(Calendar.MONTH) == nowTimestamp.get(Calendar.MONTH) && incomeTimestamp.get(Calendar.YEAR) == nowTimestamp.get(Calendar.YEAR)) {
+                            todayIncome += income.amount;
+                        }
+
+                        if (incomeTimestamp.get(Calendar.WEEK_OF_YEAR) == nowTimestamp.get(Calendar.WEEK_OF_YEAR) && incomeTimestamp.get(Calendar.YEAR) == nowTimestamp.get(Calendar.YEAR)) {
+                            thisWeekIncome += income.amount;
+                        }
+
+                        if (incomeTimestamp.get(Calendar.MONTH) == nowTimestamp.get(Calendar.MONTH) && incomeTimestamp.get(Calendar.YEAR) == nowTimestamp.get(Calendar.YEAR)) {
+                            thisMonthIncome += income.amount;
+                        }
                     }
 
-                    if (incomeTimestamp.get(Calendar.WEEK_OF_YEAR) == nowTimestamp.get(Calendar.WEEK_OF_YEAR) && incomeTimestamp.get(Calendar.YEAR) == nowTimestamp.get(Calendar.YEAR)) {
-                        thisWeekExpense += expense.amount;
-                    }
+                    ((TextView) findViewById(R.id.textViewTodayIncomeAmount)).setText(new DecimalFormat("#.00").format(todayIncome));
+                    ((TextView) findViewById(R.id.textViewThisWeekIncomeAmount)).setText(new DecimalFormat("#.00").format(thisWeekIncome));
+                    ((TextView) findViewById(R.id.textViewThisMonthIncomeAmount)).setText(new DecimalFormat("#.00").format(thisMonthIncome));
 
-                    if (incomeTimestamp.get(Calendar.MONTH) == nowTimestamp.get(Calendar.MONTH) && incomeTimestamp.get(Calendar.YEAR) == nowTimestamp.get(Calendar.YEAR)) {
-                        thisMonthExpense += expense.amount;
-                    }
+                    if (todayIncome == 0)
+                        ((TextView) findViewById(R.id.textViewTodayIncomeAmount)).setText("0.00");
+                    if (thisWeekIncome == 0)
+                        ((TextView) findViewById(R.id.textViewThisWeekIncomeAmount)).setText("0.00");
+                    if (thisMonthIncome == 0)
+                        ((TextView) findViewById(R.id.textViewThisMonthIncomeAmount)).setText("0.00");
+
                 }
 
-                ((TextView) findViewById(R.id.textViewTodayExpenseAmount)).setText(new DecimalFormat("#.00").format(todayExpense));
-                ((TextView) findViewById(R.id.textViewThisWeekExpenseAmount)).setText(new DecimalFormat("#.00").format(thisWeekExpense));
-                ((TextView) findViewById(R.id.textViewThisMonthExpenseAmount)).setText(new DecimalFormat("#.00").format(thisMonthExpense));
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
 
-                if (todayExpense == 0)
-                    ((TextView) findViewById(R.id.textViewTodayExpenseAmount)).setText("0.00");
-                if (thisWeekExpense == 0)
-                    ((TextView) findViewById(R.id.textViewThisWeekExpenseAmount)).setText("0.00");
-                if (thisMonthExpense == 0)
-                    ((TextView) findViewById(R.id.textViewThisMonthExpenseAmount)).setText("0.00");
+                }
+            });
 
-            }
+            databaseReference.child("expense").child(sharedPreferences.getString("uid", null)).addValueEventListener(new ValueEventListener() {
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
 
-            }
-        });
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
 
-        //setting current balance
-        mMonthExpenseAmount.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                    double todayExpense = 0;
+                    double thisWeekExpense = 0;
+                    double thisMonthExpense = 0;
 
-            }
+                    Calendar incomeTimestamp = Calendar.getInstance();
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    Calendar nowTimestamp = Calendar.getInstance();
+                    nowTimestamp.setTimeInMillis(Calendar.getInstance().getTimeInMillis());
 
-            }
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        Expense expense = snapshot.getValue(Expense.class);
 
-            @Override
-            public void afterTextChanged(Editable s) {
+                        incomeTimestamp.setTimeInMillis(expense.timestamp);
 
-                String monthIncome = mMonthIncomeAmount.getText().toString();
-                String monthExpense = mMonthExpenseAmount.getText().toString();
+                        if (incomeTimestamp.get(Calendar.DATE) == nowTimestamp.get(Calendar.DATE) && incomeTimestamp.get(Calendar.MONTH) == nowTimestamp.get(Calendar.MONTH) && incomeTimestamp.get(Calendar.YEAR) == nowTimestamp.get(Calendar.YEAR)) {
+                            todayExpense += expense.amount;
+                        }
 
-                double currentBalance = 0;
+                        if (incomeTimestamp.get(Calendar.WEEK_OF_YEAR) == nowTimestamp.get(Calendar.WEEK_OF_YEAR) && incomeTimestamp.get(Calendar.YEAR) == nowTimestamp.get(Calendar.YEAR)) {
+                            thisWeekExpense += expense.amount;
+                        }
 
-                if (!monthExpense.trim().equals("") && !monthIncome.trim().equals(""))
-                    currentBalance = Double.parseDouble(monthIncome) - Double.parseDouble(monthExpense);
+                        if (incomeTimestamp.get(Calendar.MONTH) == nowTimestamp.get(Calendar.MONTH) && incomeTimestamp.get(Calendar.YEAR) == nowTimestamp.get(Calendar.YEAR)) {
+                            thisMonthExpense += expense.amount;
+                        }
+                    }
 
-                mCurrentBalanceAmount.setText(new DecimalFormat("#.00").format(currentBalance));
+                    ((TextView) findViewById(R.id.textViewTodayExpenseAmount)).setText(new DecimalFormat("#.00").format(todayExpense));
+                    ((TextView) findViewById(R.id.textViewThisWeekExpenseAmount)).setText(new DecimalFormat("#.00").format(thisWeekExpense));
+                    ((TextView) findViewById(R.id.textViewThisMonthExpenseAmount)).setText(new DecimalFormat("#.00").format(thisMonthExpense));
 
-                if (currentBalance == 0)
-                    mCurrentBalanceAmount.setText("0.00");
-            }
-        });
+                    if (todayExpense == 0)
+                        ((TextView) findViewById(R.id.textViewTodayExpenseAmount)).setText("0.00");
+                    if (thisWeekExpense == 0)
+                        ((TextView) findViewById(R.id.textViewThisWeekExpenseAmount)).setText("0.00");
+                    if (thisMonthExpense == 0)
+                        ((TextView) findViewById(R.id.textViewThisMonthExpenseAmount)).setText("0.00");
 
-        //setting current balance
-        mMonthIncomeAmount.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                }
 
-            }
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                }
+            });
 
-            }
+            //setting current balance
+            mMonthExpenseAmount.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-            @Override
-            public void afterTextChanged(Editable s) {
-                String monthIncome = mMonthIncomeAmount.getText().toString();
-                String monthExpense = mMonthExpenseAmount.getText().toString();
+                }
 
-                double currentBalance = 0;
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-                if (!monthExpense.trim().equals("") && !monthIncome.trim().equals(""))
-                    currentBalance = Double.parseDouble(monthIncome) - Double.parseDouble(monthExpense);
+                }
 
-                mCurrentBalanceAmount.setText(new DecimalFormat("#.00").format(currentBalance));
+                @Override
+                public void afterTextChanged(Editable s) {
 
-                if (currentBalance == 0)
-                    mCurrentBalanceAmount.setText("0.00");
-            }
-        });
+                    String monthIncome = mMonthIncomeAmount.getText().toString();
+                    String monthExpense = mMonthExpenseAmount.getText().toString();
+
+                    double currentBalance = 0;
+
+                    if (!monthExpense.trim().equals("") && !monthIncome.trim().equals(""))
+                        currentBalance = Double.parseDouble(monthIncome) - Double.parseDouble(monthExpense);
+
+                    mCurrentBalanceAmount.setText(new DecimalFormat("#.00").format(currentBalance));
+
+                    if (currentBalance == 0)
+                        mCurrentBalanceAmount.setText("0.00");
+                }
+            });
+
+            //setting current balance
+            mMonthIncomeAmount.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                    String monthIncome = mMonthIncomeAmount.getText().toString();
+                    String monthExpense = mMonthExpenseAmount.getText().toString();
+
+                    double currentBalance = 0;
+
+                    if (!monthExpense.trim().equals("") && !monthIncome.trim().equals(""))
+                        currentBalance = Double.parseDouble(monthIncome) - Double.parseDouble(monthExpense);
+
+                    mCurrentBalanceAmount.setText(new DecimalFormat("#.00").format(currentBalance));
+
+                    if (currentBalance == 0)
+                        mCurrentBalanceAmount.setText("0.00");
+                }
+            });
 
     }
 
@@ -361,8 +359,9 @@ public class ExpenxActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
+            System.out.println("______________affinity");
             super.onBackPressed();
-            this.finishAffinity(); //exit whole android application
+//            this.finishAffinity(); //exit whole android application
         }
     }
 

@@ -9,7 +9,7 @@
 
     <LinearLayout
         android:id="@+id/linearLayoutExpenseAmountEdit"
-        android:layout_width="336dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:weightSum="10"
