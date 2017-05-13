@@ -29,6 +29,8 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -145,7 +147,7 @@ public class SettingsActivity extends AppCompatActivity {
                 builder.setTitle("Enter Old Password");
 
                 final EditText oldPassword = new EditText(SettingsActivity.this);
-                oldPassword.setInputType(InputType.TYPE_CLASS_TEXT);
+                oldPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
                 builder.setView(oldPassword);
                 builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
@@ -157,7 +159,7 @@ public class SettingsActivity extends AppCompatActivity {
                         builder.setTitle("Enter New Password");
 
                         final EditText newPassword = new EditText(SettingsActivity.this);
-                        newPassword.setInputType(InputType.TYPE_CLASS_TEXT);
+                        newPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
                         builder.setView(newPassword);
                         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             @Override
@@ -169,13 +171,13 @@ public class SettingsActivity extends AppCompatActivity {
                                 builder.setTitle("Confirm New Password");
 
                                 final EditText confirmedNewPassword = new EditText(SettingsActivity.this);
-                                confirmedNewPassword.setInputType(InputType.TYPE_CLASS_TEXT);
+                                confirmedNewPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD );
                                 builder.setView(confirmedNewPassword);
                                 builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
 
-                                        if (newPassword.getText().toString().equals(confirmedNewPassword.getText().toString())) {
+                                        if (newPassword.getText().toString().equals(confirmedNewPassword.getText().toString()) && checkPasswordStrength(confirmedNewPassword.getText().toString())) {
 
 
                                             //changing passwords from firebase
@@ -253,5 +255,22 @@ public class SettingsActivity extends AppCompatActivity {
                 builder.show();
             }
         });
+    }
+
+    private boolean checkPasswordStrength(String password) {
+
+        boolean valid = true;
+
+        Pattern pattern = Pattern.compile("[a-zA-Z0-9]*");
+        Matcher matcher = pattern.matcher(password);
+
+        if (password.length() < 6) {
+            Toast.makeText(this, "Password should be more than 6 characters", Toast.LENGTH_LONG).show();
+            valid = false;
+        } else if (matcher.matches()) {
+            Toast.makeText(this, "Password should have atleast one speacial character", Toast.LENGTH_LONG).show();
+            valid = false;
+        }
+        return valid;
     }
 }

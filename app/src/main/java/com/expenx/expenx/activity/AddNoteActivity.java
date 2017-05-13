@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,6 +37,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 public class AddNoteActivity extends AppCompatActivity {
 
@@ -43,6 +45,7 @@ public class AddNoteActivity extends AppCompatActivity {
     EditText mEditTextNoteTitle, mEditTextNoteDescription, mEditTextNoteAmount;
     ImageButton mImageButtonEditAmount, mImageButtonNoteUploadImage;
     Button mButtonCancelNote, mButtonSaveNote;
+    ImageView mNoteImage;
 
     private Uri selectedImage = null;
 
@@ -85,6 +88,7 @@ public class AddNoteActivity extends AppCompatActivity {
         mButtonSaveNote = (Button) findViewById(R.id.buttonSaveNote);
 
         mUploadImage = (TextView) findViewById(R.id.TextViewUploadAnImage);
+        mNoteImage = (ImageView)findViewById(R.id.imageViewNoteImage);
 
         mImageButtonEditAmount.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -156,6 +160,8 @@ public class AddNoteActivity extends AppCompatActivity {
                 mUploadImage.setText("Image Selected");
                 String path = getRealPathFromURI(selectedImage);
                 image = path.substring(path.lastIndexOf("/") + 1);
+
+                Picasso.with(AddNoteActivity.this).load(selectedImage).into(mNoteImage);
             }
 
         } catch (Exception e) {
@@ -236,7 +242,7 @@ public class AddNoteActivity extends AppCompatActivity {
             MessageOutput.dismissProgressDialog();
             AddNoteActivity.this.finish();
 
-
+            Toast.makeText(this, "Note added successfully", Toast.LENGTH_LONG).show();
         } catch (Exception ex) {
             MessageOutput.dismissProgressDialog();
             Toast.makeText(AddNoteActivity.this, ex.getMessage(), Toast.LENGTH_LONG).show();
