@@ -359,7 +359,6 @@ public class ExpenxActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            System.out.println("______________affinity");
             super.onBackPressed();
 //            this.finishAffinity(); //exit whole android application
         }

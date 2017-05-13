@@ -16,65 +16,78 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="false"
         android:text="@string/reminder_add"
-        android:textSize="18dp"
-        android:textColor="@color/colorText" />
+        android:textColor="@color/colorText"
+        android:textSize="18dp" />
 
     <Switch
         android:id="@+id/ReminderToggle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true" />
 
     <TextView
         android:id="@+id/textViewFrequency"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/reminder_frequency"
-        android:textSize="18dp"
-        android:textColor="@color/colorText"
-        android:layout_below="@+id/ReminderToggle"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="24dp" />
+        android:layout_below="@+id/ReminderToggle"
+        android:layout_marginTop="24dp"
+        android:text="@string/reminder_frequency"
+        android:textColor="@color/colorText"
+        android:textSize="18dp" />
 
     <Spinner
         android:id="@+id/frequency_spinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:layout_alignTop="@+id/textViewFrequency"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:backgroundTint="@color/colorText" />
 
-    <TextView
-        android:id="@+id/textViewWhenToRemind"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/colorText"
-        android:text="@string/when_to_remind"
-        android:textSize="18dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
         android:layout_below="@+id/frequency_spinner"
-        android:layout_marginTop="24dp" />
+        android:layout_marginTop="24dp"
+        android:orientation="horizontal"
+        android:weightSum="10">
 
-    <TextClock
-        android:id="@+id/textClock"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/textViewWhenToRemind"
-        android:layout_alignBottom="@+id/textViewWhenToRemind"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        <TextView
+            android:id="@+id/textViewWhenToRemind"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="9"
+            android:text="@string/when_to_remind"
+            android:textColor="@color/colorText"
+            android:textSize="18dp" />
+
+        <ImageButton
+            android:id="@+id/textClock"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:background="@color/transparent"
+            android:gravity="end"
+            android:layout_weight="1"
+            android:onClick="showTimePickerDialog"
+            android:src="@drawable/ic_select_time" />
+    </LinearLayout>
 
     <Button
         android:id="@+id/btnSave"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:textColor="@color/colorText"
+        android:background="@drawable/button_normal"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="15dp"
-        android:layout_toRightOf="@+id/textViewFrequency"
-        android:text="Save" />
+        android:layout_marginBottom="@dimen/fab_margin"
+        android:text="Save"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
 
 </RelativeLayout>

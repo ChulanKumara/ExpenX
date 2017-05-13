@@ -1,8 +1,6 @@
 package com.expenx.expenx.activity;
 
-import android.app.Activity;
-import android.app.Dialog;
-import android.media.Image;
+
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -12,7 +10,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.expenx.expenx.R;
 import com.expenx.expenx.core.CalculatorDialog;
@@ -25,7 +22,6 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.ResponseBody;
@@ -113,7 +109,7 @@ public class CurrencyConverterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if (mEditTextCurrencyAmount.getText() != null) {
+                if (!mEditTextCurrencyAmount.getText().toString().isEmpty()) {
                     final String currencyToConvert = String.valueOf(mSpinnerLeftCurrency.getSelectedItem() + "_" + String.valueOf(mSpinnerRightCurrency.getSelectedItem()));
 
                     GetCurrencyRate getCurrencyRate = retrofit.create(GetCurrencyRate.class);

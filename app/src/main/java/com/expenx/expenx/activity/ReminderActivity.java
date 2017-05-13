@@ -1,6 +1,7 @@
 package com.expenx.expenx.activity;
 
 import android.app.AlarmManager;
+import android.app.DialogFragment;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -11,7 +12,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
@@ -20,10 +20,9 @@ import android.widget.Toast;
 import android.widget.TextClock;
 
 import com.expenx.expenx.R;
-import com.expenx.expenx.core.DataModel;
 import com.expenx.expenx.core.MessageOutput;
 import com.expenx.expenx.core.NotifyService;
-import com.expenx.expenx.model.Expense;
+import com.expenx.expenx.core.TimePickerFragment;
 import com.expenx.expenx.model.Reminder;
 import com.expenx.expenx.model.User;
 import com.google.firebase.auth.FirebaseAuth;
@@ -36,8 +35,9 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.security.Timestamp;
 import java.util.Calendar;
+import java.util.Date;
 
-public abstract class ReminderActivity extends AppCompatActivity implements OnItemSelectedListener {
+public class ReminderActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
@@ -49,14 +49,16 @@ public abstract class ReminderActivity extends AppCompatActivity implements OnIt
 
     private Switch mySwitch;
     private Spinner spinner;
-    private TextClock textClock;
+//    private TextClock textClock;
+
+    public static Calendar calendatTime = Calendar.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reminder);
 
-        Spinner spinner = (Spinner) findViewById(R.id.frequency_spinner);
+        spinner = (Spinner) findViewById(R.id.frequency_spinner);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(ReminderActivity.this,
                 android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.frequency_array));
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -69,8 +71,8 @@ public abstract class ReminderActivity extends AppCompatActivity implements OnIt
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         mSaveButton = (Button) findViewById(R.id.btnSave);
-        spinner = (Spinner) findViewById(R.id.frequency_spinner);
-        textClock = (TextClock) findViewById(R.id.textClock);
+//        mspinner = (Spinner) findViewById(R.id.frequency_spinner);
+//        textClock = (TextClock) findViewById(R.id.textClock);
         mySwitch = (Switch) findViewById(R.id.ReminderToggle);
         //setSwitch();
 
@@ -81,6 +83,10 @@ public abstract class ReminderActivity extends AppCompatActivity implements OnIt
                 saveReminder();
             }
         });
+
+        //set auto date
+        Date date = new Date();
+        calendatTime.setTimeInMillis(date.getTime());
 
     }
 
@@ -136,28 +142,37 @@ public abstract class ReminderActivity extends AppCompatActivity implements OnIt
         switch((String)obj) {
             case "Daily" : {
                 frequncy = "Daily";
+                break;
             }
             case "Weekly" : {
                frequncy = "Weekly";
+                break;
             }
             case "Monthly" : {
                 frequncy = "Monthly";
+                break;
             }
             case "Quaterly" : {
                 frequncy = "Quaterly";
+                break;
             }
             case "Yearly" : {
                 frequncy = "Yearly";
+                break;
             }
             default:{
                 frequncy = "Weekly";
+                break;
             }
         }
 
-        String timeStr = textClock.getText().toString();
-        time = Long.parseLong(timeStr);
+//        String timeStr = textClock.getText().toString();
+//        time = Long.parseLong(timeStr);
 
-        Reminder newReminder = new Reminder(frequncy,onState,time);
+
+
+
+        Reminder newReminder = new Reminder(frequncy,onState,calendatTime.getTimeInMillis());
         DatabaseReference currentDb = mDatabase.child("user").child(sharedPreferences.getString("uid", null)).child("reminder");
         currentDb.setValue(newReminder);
 
@@ -182,7 +197,13 @@ public abstract class ReminderActivity extends AppCompatActivity implements OnIt
         // @Samintha -  I checked and alarm manager might not work after a restart :/
 
         Toast.makeText(this, "Reminder Updated", Toast.LENGTH_LONG).show();
+        this.finish();
     }
 
+    public void showTimePickerDialog(View v) {
+        DialogFragment newFragment = new TimePickerFragment();
+        newFragment.show(ReminderActivity.this.getFragmentManager(), "timePicker");
+
+    }
 
 }
