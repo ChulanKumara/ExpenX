@@ -58,7 +58,7 @@ public class LoanCalculatorActivity extends AppCompatActivity {
         mButtonCalculateAnnually.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!mEditTextLoanCalAmount.getText().toString().isEmpty() && !mEditTextLoanCalInterest.getText().toString().isEmpty() &&  (monthList.get(mSpinnerMonths.getSelectedItemPosition()) != 0 || yearList.get(mSpinnerYears.getSelectedItemPosition()) != 0)) {
+                if(!mEditTextLoanCalAmount.getText().toString().isEmpty() && !mEditTextLoanCalInterest.getText().toString().isEmpty() &&  (monthList.get(mSpinnerMonths.getSelectedItemPosition()) != 0 || yearList.get(mSpinnerYears.getSelectedItemPosition()) != 0) && yearList.get(mSpinnerYears.getSelectedItemPosition()) > 0) {
                     double loanAmount = Double.parseDouble(mEditTextLoanCalAmount.getText().toString());
                     int termInMonths = monthList.get(mSpinnerMonths.getSelectedItemPosition()) + (yearList.get(mSpinnerYears.getSelectedItemPosition()) * 12);
                     double interestRate = Double.parseDouble(mEditTextLoanCalInterest.getText().toString());
@@ -69,6 +69,7 @@ public class LoanCalculatorActivity extends AppCompatActivity {
                     mTextViewLoanResult.setText(df.format(result));
                 }else {
                     MessageOutput.showSnackbarLongDuration(LoanCalculatorActivity.this,"Please double check your input...!");
+                    mTextViewLoanResult.setText("0.00");
                 }
             }
         });
@@ -88,6 +89,7 @@ public class LoanCalculatorActivity extends AppCompatActivity {
                     mTextViewLoanResult.setText(df.format(result));
                 }else {
                     MessageOutput.showSnackbarLongDuration(LoanCalculatorActivity.this,"Please double check your input...!");
+                    mTextViewLoanResult.setText("0.00");
                 }
             }
         });

@@ -5,7 +5,7 @@
             android:shape="oval">
             <stroke
                 android:width="3dp"
-                android:color="@color/colorCircle"
+                android:color="@color/colorText"
                 android:dashWidth="1dp"
                 android:dashGap="3dp"/>
 
@@ -17,6 +17,7 @@
     </item>
     <item>
         <bitmap xmlns:android="http://schemas.android.com/apk/res/android"
-            android:src="@mipmap/ic_camera" android:gravity="center" />
+            android:src="@mipmap/ic_pro_pic_cam" android:antialias="true" android:gravity="center" />
     </item>
+
 </layer-list>

@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -131,22 +132,20 @@ public class DebtActivity extends AppCompatActivity {
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                             final LendTo listItem = (LendTo) lv.getItemAtPosition(position);
                             final Dialog dialog = new Dialog(context);
-
+                            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                             dialog.setContentView(R.layout.custom);
-                            dialog.setTitle("Title...");
+
 
                             //custom dialog popup
                             TextView text = (TextView) dialog.findViewById(R.id.text);
                             Button dialogButton = (Button) dialog.findViewById(R.id.dialogButtonDelete);
-                            EditText custom_name=(EditText)dialog.findViewById(R.id.custom_name) ;
                             EditText custom_amount=(EditText)dialog.findViewById(R.id.custom_amount);
                             EditText custom_date=(EditText)dialog.findViewById(R.id.custom_date);
                             EditText custom_due_date=(EditText)dialog.findViewById(R.id.custom_due_date);
                             EditText custom_ref=(EditText)dialog.findViewById(R.id.custom__ref);
                             EditText custom_desc=(EditText)dialog.findViewById(R.id.custom_desc);
-                            Spinner custom_spinner=(Spinner)dialog.findViewById(R.id.custom_spinner_payment) ;
+//                            EditText custom_spinner=(EditText)dialog.findViewById(R.id.custom_spinner_payment) ;
 
-                            custom_name.setText(listItem.name);
                             custom_amount.setText(""+listItem.amount);
                             custom_date.setText(getDate(listItem.date));
                             custom_due_date.setText(getDate(listItem.dueDate));

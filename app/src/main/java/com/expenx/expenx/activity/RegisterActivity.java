@@ -49,7 +49,7 @@ public class RegisterActivity extends AppCompatActivity {
     EditText mEmail;
     EditText mPassword;
     Button mRegisterButton;
-    ImageButton mSelectImage;
+    ImageView mSelectImage;
 
     private String firstName;
     private String lastName;
@@ -61,6 +61,7 @@ public class RegisterActivity extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener mAuthListener;
     private DatabaseReference mDatabase;
     private StorageReference mStorage;
+
 
     private static int RESULT_LOAD_IMG = 1;
     private Uri selectedImage = null;
@@ -83,8 +84,9 @@ public class RegisterActivity extends AppCompatActivity {
         mLastName = (EditText) findViewById(R.id.txtLastName);
         mEmail = (EditText) findViewById(R.id.txtEmail);
         mPassword = (EditText) findViewById(R.id.txtPassword);
-        mSelectImage = (ImageButton) findViewById(R.id.buttonLoadPicture);
         mRegisterButton = (Button) findViewById(R.id.btnRegister);
+
+        mSelectImage = (ImageView) findViewById(R.id.buttonLoadPicture);
 
         mSelectImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -181,9 +183,10 @@ public class RegisterActivity extends AppCompatActivity {
             if (requestCode == GALLERY_INTENT && resultCode == RESULT_OK) {
 
                 selectedImage = data.getData();
-                mSelectImage.setBackgroundResource(R.drawable.button_image_selected);
                 String path = getRealPathFromURI(selectedImage);
                 image = path.substring(path.lastIndexOf("/") + 1);
+
+                Picasso.with(RegisterActivity.this).load(selectedImage).into(mSelectImage);
             }
 
         } catch (Exception e) {
