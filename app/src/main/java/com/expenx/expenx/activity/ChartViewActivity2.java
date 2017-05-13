@@ -3,9 +3,9 @@ package com.expenx.expenx.activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
@@ -16,12 +16,11 @@ import com.expenx.expenx.model.BorrowFrom;
 import com.expenx.expenx.model.Expense;
 import com.expenx.expenx.model.Income;
 import com.expenx.expenx.model.User;
-import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.Legend;
-import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.PieData;
-import com.github.mikephil.charting.data.PieDataSet;
-import com.github.mikephil.charting.formatter.PercentFormatter;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -31,12 +30,16 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.List;
+
 
 /**
- * Created by Haritha on 12/05/2017.
+ * Created by c2k on 13/05/2017.
  */
 
-public class ChartViewActivity extends AppCompatActivity {
+public class ChartViewActivity2 extends AppCompatActivity {
+
+    private List<BarEntry> entries;
 
     private RelativeLayout chartLayout;
 
@@ -51,35 +54,28 @@ public class ChartViewActivity extends AppCompatActivity {
     public User user = null;
     SharedPreferences sharedPreferences;
 
-    PieChart pieChart;
-    PieData pieData;
-    PieDataSet pieDataSet;
-
-    private ArrayList<String> xVal;
-    private ArrayList<Entry> yVal;
-    private  ArrayList<Integer> colors;
-
-    private int[] yData = new int[3];
-    private String[] xData = {"Expense", "Income", "Debt"};
+    BarDataSet set;
+    BarChart chart;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chart_view_pie);
+        setContentView(R.layout.activity_chart_view_bar);
+        entries = new ArrayList<>();
 
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
-        chartLayout = (RelativeLayout) findViewById(R.id.pieChartLayout);
-        pieChart = (PieChart) findViewById(R.id.pieChart);
+        chartLayout = (RelativeLayout) findViewById(R.id.barchartLayout);
+        chart = (BarChart) findViewById(R.id.barchart);
 
-        Button barChartView = (Button) findViewById(R.id.switchToBarChart);
-        barChartView.setOnClickListener(new View.OnClickListener() {
+        Button pieChartView = (Button) findViewById(R.id.switchToPieChart);
+        pieChartView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ChartViewActivity.this, ChartViewActivity2.class));
+                startActivity(new Intent(ChartViewActivity2.this, ChartViewActivity.class));
                 finish();
             }
         });
@@ -87,10 +83,9 @@ public class ChartViewActivity extends AppCompatActivity {
         loadExpenseData();
         loadIncomeData();
         loadDebtData();
-
     }
 
-    private void loadExpenseData() {
+    public void loadExpenseData() {
 
         mDatabase.child("expense").child(sharedPreferences.getString("uid", null)).addValueEventListener(new ValueEventListener() {
             @Override
@@ -99,18 +94,18 @@ public class ChartViewActivity extends AppCompatActivity {
                     Expense expense = snapshot.getValue(Expense.class);
                     expenseAmount += (int) expense.amount;
                 }
-                yData[0] = expenseAmount;
+                entries.add(new BarEntry(expenseAmount, 0));
                 initView();
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                MessageOutput.showSnackbarLongDuration(ChartViewActivity.this, databaseError.getMessage());
+                MessageOutput.showSnackbarLongDuration(ChartViewActivity2.this, databaseError.getMessage());
             }
         });
     }
 
-    private void loadIncomeData() {
+    public  void loadIncomeData(){
 
         mDatabase.child("income").child(sharedPreferences.getString("uid", null)).addValueEventListener(new ValueEventListener() {
             @Override
@@ -119,19 +114,20 @@ public class ChartViewActivity extends AppCompatActivity {
                     Income income = snapshot.getValue(Income.class);
                     incomeAmount += (int)income.amount;
                 }
-                yData[1] = incomeAmount;
+                entries.add(new BarEntry(incomeAmount, 1));
                 initView();
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                MessageOutput.showSnackbarLongDuration(ChartViewActivity.this, databaseError.getMessage());
+                MessageOutput.showSnackbarLongDuration(ChartViewActivity2.this, databaseError.getMessage());
             }
         });
+
     }
 
-    private void loadDebtData() {
 
+    public void loadDebtData() {
         mDatabase.child("debt").child(sharedPreferences.getString("uid", null)).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -139,64 +135,41 @@ public class ChartViewActivity extends AppCompatActivity {
                     BorrowFrom borrowFrom = snapshot.getValue(BorrowFrom.class);
                     borrowedAmount += (int)borrowFrom.amount;
                 }
-                yData[2] = borrowedAmount;
+                entries.add(new BarEntry(borrowedAmount, 2));
                 initView();
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                MessageOutput.showSnackbarLongDuration(ChartViewActivity.this, databaseError.getMessage());
+                MessageOutput.showSnackbarLongDuration(ChartViewActivity2.this, databaseError.getMessage());
             }
         });
-
     }
 
-    private void initView() {
+    public  void initView(){
 
-        pieChart.setUsePercentValues(true);
-
-        yVal = new ArrayList<Entry>();
-        for (int i = 0; i < yData.length; i++) {
-            yVal.add(new Entry(yData[i], i));
-        }
-
-        xVal = new ArrayList<String>();
-        for (int i = 0; i < xData.length; i++) {
-            xVal.add(xData[i]);
-        }
-
-        colors = new ArrayList<>();
-        colors.add(Color.rgb(14, 255, 104));
-        colors.add(Color.rgb(255, 14, 81));
-        colors.add(Color.rgb(232, 77, 255));
-
-        Legend legend = pieChart.getLegend();
+        Legend legend = chart.getLegend();
         legend.setCustom(new int[]{Color.rgb(255, 14, 81), Color.rgb(14, 255, 104), Color.rgb(232, 77, 255)},
                 new String[]{"Expense", "Income", "Debt"});
         legend.setTextColor(Color.rgb(255, 255, 255));
-        legend.setTextSize(13f);
 
-        pieDataSet = new PieDataSet(yVal, "");
-        pieChart.setDescription("");
+        set = new BarDataSet(entries, "Bar");
+        set.setHighlightEnabled(false);
+        set.setValueTextColor(Color.rgb(255, 255, 255));
 
-        pieDataSet.setColors(colors);
-        pieDataSet.setSliceSpace(1);
+        BarData data = new BarData();
+        set.setColors(new int[]{Color.rgb(14, 255, 104), Color.rgb(255, 14, 81), Color.rgb(232, 77, 255)});
+        data.addDataSet(set);
 
-        pieData = new PieData(xVal, pieDataSet);
-        pieData.setValueFormatter(new PercentFormatter());
-        pieData.setValueTextSize(16f);
-        pieData.setValueTextColor(Color.BLACK);
-
-        pieChart.setData(pieData);
-        pieChart.animateX(5000);
-        pieChart.setDrawHoleEnabled(true);
-        pieChart.setHoleRadius(45);
-        pieChart.setTransparentCircleRadius(15);
-        pieChart.setHoleColor(Color.parseColor("#2f3043"));
-        pieChart.setHovered(true);
-        pieChart.invalidate();
+        chart.setData(data);
+        chart.setVisibleXRangeMinimum(entries.size());
+        chart.animateX(5000);
+        chart.animateY(5000);
+        chart.getAxisRight().setEnabled(false);
+        chart.setDescription("");
+        chart.getAxisLeft().setTextColor(Color.rgb(255, 255, 255));
+        chart.invalidate();
 
     }
-
 
 }

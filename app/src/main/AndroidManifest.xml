@@ -54,6 +54,11 @@
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppThemeSecondary" />
         <activity
+            android:name=".activity.ChartViewActivity2"
+            android:label="Chart View"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppThemeSecondary" />
+        <activity
             android:name=".activity.CalendarViewActivity"
             android:label="Calendar View"
             android:screenOrientation="portrait"
