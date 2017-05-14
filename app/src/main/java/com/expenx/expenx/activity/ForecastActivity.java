@@ -43,7 +43,7 @@ public class ForecastActivity extends AppCompatActivity {
     TextView mTextViewOtherExpense;
 
 
-    Calendar lastMonthCalendar;
+
     HashMap<Integer, Double> monthExpenseHash;
 
     HashMap<Integer, Double> monthShoppingExpenseHash;
@@ -71,9 +71,8 @@ public class ForecastActivity extends AppCompatActivity {
         monthMedicalExpenseHash = new HashMap<Integer, Double>();
         monthOtherExpenseHash = new HashMap<Integer, Double>();
 
-        //set time to 1970/1/2
-        lastMonthCalendar = Calendar.getInstance();
-        lastMonthCalendar.setTimeInMillis(66600000);
+
+
 
         mTextViewResult = (TextView) findViewById(R.id.forecastTextResult);
         mLastMonthExpense = (TextView) findViewById(R.id.forecastTextLastMonth);
@@ -101,11 +100,12 @@ public class ForecastActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
+                //set time to 1970/1/2
+                Calendar lastMonthCalendar;
+                lastMonthCalendar = Calendar.getInstance();
                 lastMonthCalendar.setTimeInMillis(66600000);
 
                 int i = 0;
-                double lastMonthExpense = 0;
-                double thisMonthExpense = 0;
 
                 double accurateLastMonthExpense = 0;
                 Date date = new Date();
@@ -123,17 +123,14 @@ public class ForecastActivity extends AppCompatActivity {
                         accurateLastMonthExpense += expense.amount;
 
                     if (calendar.get(Calendar.MONTH) == lastMonthCalendar.get(Calendar.MONTH) && calendar.get(Calendar.YEAR) == lastMonthCalendar.get(Calendar.YEAR)) {
-                        thisMonthExpense += expense.amount;
-                        monthExpenseHash.put(i, thisMonthExpense);
-                        lastMonthExpense = thisMonthExpense;
+                        double lastValue = 0;
+                        lastValue = monthExpenseHash.get(i);
+                        monthExpenseHash.put(i, lastValue + expense.amount);
+                        lastMonthCalendar.setTimeInMillis(expense.timestamp);
                     } else {
-                        if (lastMonthExpense > 0)
-                            monthExpenseHash.put(i, lastMonthExpense);
-
-                        lastMonthCalendar.setTimeInMillis(expense.timestamp); //set last month to this month
-                        lastMonthExpense = expense.amount;
-                        thisMonthExpense = expense.amount;
                         i++;
+                        monthExpenseHash.put(i, expense.amount);
+                        lastMonthCalendar.setTimeInMillis(expense.timestamp);
                     }
                 }
 
@@ -173,6 +170,9 @@ public class ForecastActivity extends AppCompatActivity {
                         dataSnapshotList.add(snapshot);
                 }
 
+                //set time to 1970/1/2
+                Calendar lastMonthCalendar;
+                lastMonthCalendar = Calendar.getInstance();
                 lastMonthCalendar.setTimeInMillis(66600000);
 
                 int i = 0;
@@ -217,7 +217,6 @@ public class ForecastActivity extends AppCompatActivity {
     public double forecast(List<Double> e) {
 
         double forecast = 0;
-
 
         if (e.size() == 1) {
             for (double d : e)
