@@ -77,6 +77,7 @@ public class ExpenxActivity extends AppCompatActivity
         if (netInfo == null) {
             LoginActivity.isExpenxActivityLaunched = false;
             startActivity(new Intent(this, TurnOnNetworkActivity.class));
+            ExpenxActivity.this.overridePendingTransition(0, 0);
             this.finish();
             return;
         }

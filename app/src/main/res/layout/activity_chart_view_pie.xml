@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:weightSum="1"
+    android:padding="@dimen/fab_margin"
     tools:context="com.expenx.expenx.activity.ChartViewActivity">
 
     <FrameLayout
@@ -19,25 +20,24 @@
             android:paddingBottom="10dp"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            android:paddingTop="30dp"></RelativeLayout>
+            android:paddingTop="30dp" />
 
         <com.github.mikephil.charting.charts.PieChart
             android:id="@+id/pieChart"
             android:layout_width="match_parent"
             android:layout_height="374dp"
-            android:paddingTop="30dp"></com.github.mikephil.charting.charts.PieChart>
-
+            android:paddingTop="30dp"/>
 
     </FrameLayout>
 
     <Button
         android:id="@+id/switchToBarChart"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="100dp"
-        android:layout_marginRight="100dp"
+        android:layout_height="45dp"
+        android:background="@drawable/button_normal"
+        android:textColor="@color/colorText"
+        android:layout_alignParentBottom="true"
         android:layout_marginTop="25dp"
-        android:text="Switch View" />
+        android:text="BAR CHART" />
 
-
-</LinearLayout>
+</RelativeLayout>

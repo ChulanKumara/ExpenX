@@ -76,6 +76,7 @@ public class ChartViewActivity2 extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(ChartViewActivity2.this, ChartViewActivity.class));
+                ChartViewActivity2.this.overridePendingTransition(0, 0);
                 finish();
             }
         });
@@ -158,13 +159,13 @@ public class ChartViewActivity2 extends AppCompatActivity {
         set.setValueTextColor(Color.rgb(255, 255, 255));
 
         BarData data = new BarData();
-        set.setColors(new int[]{Color.rgb(14, 255, 104), Color.rgb(255, 14, 81), Color.rgb(232, 77, 255)});
+        set.setColors(new int[]{Color.rgb(255, 14, 81), Color.rgb(14, 255, 104), Color.rgb(232, 77, 255)});
         data.addDataSet(set);
 
         chart.setData(data);
         chart.setVisibleXRangeMinimum(entries.size());
-        chart.animateX(5000);
-        chart.animateY(5000);
+        chart.animateX(2000);
+        chart.animateY(2000);
         chart.getAxisRight().setEnabled(false);
         chart.setDescription("");
         chart.getAxisLeft().setTextColor(Color.rgb(255, 255, 255));

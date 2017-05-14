@@ -80,6 +80,7 @@ public class ChartViewActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(ChartViewActivity.this, ChartViewActivity2.class));
+                ChartViewActivity.this.overridePendingTransition(0, 0);
                 finish();
             }
         });
@@ -166,12 +167,12 @@ public class ChartViewActivity extends AppCompatActivity {
         }
 
         colors = new ArrayList<>();
-        colors.add(Color.rgb(14, 255, 104));
         colors.add(Color.rgb(255, 14, 81));
+        colors.add(Color.rgb(14, 255, 104));
         colors.add(Color.rgb(232, 77, 255));
 
         Legend legend = pieChart.getLegend();
-        legend.setCustom(new int[]{Color.rgb(255, 14, 81), Color.rgb(14, 255, 104), Color.rgb(232, 77, 255)},
+        legend.setCustom(new int[]{Color.rgb(255, 14, 81), Color.rgb(14, 255, 104),Color.rgb(232, 77, 255)},
                 new String[]{"Expense", "Income", "Debt"});
         legend.setTextColor(Color.rgb(255, 255, 255));
         legend.setTextSize(13f);
@@ -185,15 +186,17 @@ public class ChartViewActivity extends AppCompatActivity {
         pieData = new PieData(xVal, pieDataSet);
         pieData.setValueFormatter(new PercentFormatter());
         pieData.setValueTextSize(16f);
-        pieData.setValueTextColor(Color.BLACK);
+        pieData.setValueTextColor(Color.WHITE);
 
         pieChart.setData(pieData);
-        pieChart.animateX(5000);
+
         pieChart.setDrawHoleEnabled(true);
         pieChart.setHoleRadius(45);
         pieChart.setTransparentCircleRadius(15);
         pieChart.setHoleColor(Color.parseColor("#2f3043"));
         pieChart.setHovered(true);
+        pieChart.animateX(2000);
+        pieChart.animateY(2000);
         pieChart.invalidate();
 
     }
